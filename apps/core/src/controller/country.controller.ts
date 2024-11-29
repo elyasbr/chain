@@ -33,12 +33,9 @@ import { PaginateCountryRMapper } from '../modules/ipg/rmapper/country/paginate-
 import { CreateCountryBankMongoMapper } from '../modules/ipg/mapper/country/create-country-bank-mongo.mapper';
 import { FilterCountryBankDto } from '../modules/ipg/dtos/country/filter-country-bank.dto';
 import { PaginateCountryBankRMapper } from '../modules/ipg/rmapper/country/paginate-country-bank-r.mapper';
-import {
-  CreateCountryBankCryptoMongoMapper
-} from '../modules/ipg/mapper/country/create-country-bank-crypto-mongo.mapper';
 import { PaginateCountryBankRlCrypto } from '../modules/ipg/rmapper/country/paginate-country-bank-rl-crypto';
 import {
-  FilterCountryBankRlCryp,
+
   FilterCountryBankRlCryptoDto,
 } from '../modules/ipg/dtos/country/filter-country-bank-rl-crypto.dto';
 import {

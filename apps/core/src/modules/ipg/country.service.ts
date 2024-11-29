@@ -194,7 +194,7 @@ export class CountryService {
       const  resultCountryBankRlCrypto = await this.countryBankRlCryptoRepository.create(createCountryBankCryptoMongoMapper,[FieldsMongoEnum.UPDATED_AT])
       const resultArch = await this.archRepository.findOne({_id : resultCrypto.archId})
       const resultAsset = await this.assetRepository.findOne({_id : resultCrypto.assetId})
-      return new PaginateCountryBankRlCrypto(resultArch , resultAsset ,resultCountryBankRlCrypto)
+      return new PaginateCountryBankRlCrypto(resultArch , resultAsset ,resultCrypto ,resultCountryBankRlCrypto)
     } catch (e) {
       this.throwService.handelError(e)
     }
@@ -234,9 +234,7 @@ export class CountryService {
         const crypto = findCrypto.find((itemCrypto)=> itemCrypto._id.toString()==item.cryptoId)
         const arch = findArch.find((itemArch)=> itemArch._id.toString()==crypto.archId)
         const asset = findAsset.find((itemAsset)=> itemAsset._id.toString()==crypto.assetId)
-        const paginateCountryBankCrypto = new PaginateCountryBankRlCrypto(item._id.toString() ,arch.slug ,
-          asset.slug ,crypto, item[FieldsMongoEnum.CREATED_AT] )
-        final.push(await paginateCountryBankCrypto.getData())
+        final.push(new PaginateCountryBankRlCrypto(arch , asset , crypto ,item))
       }
       const count =await this.countryBankRlCryptoRepository.getCountDocuments()
       return new PaginateDto<PaginateCountryBankRlCrypto>(final ,filterCountryBankRlCryptoDto.page , filterCountryBankRlCryptoDto.limit , Number(count) )

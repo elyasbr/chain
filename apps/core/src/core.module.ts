@@ -32,7 +32,6 @@ import { ResponseInterceptor } from '@elyasbr/public/dist/src';
     }),
     // MongoModule.register({a : 2000}) ,
     MongooseModule.forRoot("mongodb://admin:password123@127.0.0.1:27017/") ,
-
     ThrowModule ,
     IpgModule ,
     StructModule ,

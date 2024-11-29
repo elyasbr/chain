@@ -6,9 +6,9 @@ import { CreateCountryBankRlCryptoDto } from '../../dtos/country/create-country-
 import { ApiProperty } from '@nestjs/swagger';
 import { StatusAssetEnum } from '@app/common/enums/status-asset.enum';
 import { FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
-import { Crypto } from '@app/common/dataBase/mongo/schemas/crypto.schema';
 import { Arch } from '@app/common/dataBase/mongo/schemas/arch.schema';
 import { Asset } from '@app/common/dataBase/mongo/schemas/asset.schema';
+import { Crypto } from '@app/common/dataBase/mongo/schemas/crypto.schema';
 
 export class rewardToken {
   @ApiProperty()
@@ -59,11 +59,11 @@ export class PaginateCountryBankRlCrypto {
   })
   created_at: Date
 
-  constructor(arch :Arch , asset:Asset , countryBankRlCrypto : CountryBankRlCrypto) {
+  constructor(arch :Arch , asset:Asset , crypto :Crypto, countryBankRlCrypto : CountryBankRlCrypto) {
     this.countryBankId = countryBankRlCrypto.countryBankId
     this.slugArch = arch.slug
     this.slugAsset =asset.slug
-    this.isWithdraw = crypto.isWithdraw
+    this.isWithdraw = asset.isWithdraw
     this.isDeposit = crypto.isDeposit
     this.smartContractId = crypto.smartContractId
     this.rewardToken  = crypto.rewardToken

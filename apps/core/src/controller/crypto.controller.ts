@@ -21,6 +21,7 @@ import { CreateCryptoMongoMapper } from '../modules/asset/mapper/crypto/create-c
 import { UpdateCryptoMongoMapper } from '../modules/asset/mapper/crypto/update-crypto-mongo.mapper';
 import {  GetCryptoRMapper } from '../modules/asset/rmapper/crypto/get-crypto-r.mapper';
 import { PaginateCryptoRMapper } from '../modules/asset/rmapper/crypto/paginate-crypto-r.mapper';
+import { GroupAssetEnum } from '@app/common/enums/group-asset.enum';
 
 @Controller({
   path : "blockchain/crypto" ,
@@ -56,5 +57,6 @@ export class CryptoController {
   deleteAsset( @Param('cryptoId')  cryptoId : string ) {
     return this.cryptoService.deleteCrypto(cryptoId )
   }
+
 
 }

@@ -17,6 +17,7 @@ import { CreateAssetMongoMapper } from '../modules/asset/mapper/asset/create-ass
 import { UpdateAssetMongoMapper } from '../modules/asset/mapper/asset/update-asset-mongo.mapper';
 import { PaginateAssetRMapper } from '../modules/asset/rmapper/asset/paginate-asset-r.mapper';
 import { GetAssetRMapper } from '../modules/asset/rmapper/asset/get-asset-r.mapper';
+import { GroupAssetEnum } from '@app/common/enums/group-asset.enum';
 
 @Controller({
   path : "blockchain/asset" ,
@@ -39,7 +40,11 @@ export class AssetController {
   updateAsset( @Param('assetId')  assetId : string ,@Body() updateAssetDto : UpdateAssetDto) {
     return this.assetService.updateAsset(assetId ,updateAssetDto)
   }
-
+  @Get("/asset-group")
+  @ApiOkObjectResponse(GroupAssetEnum)
+  getAssetGroup(  ) {
+    return this.assetService.getAssetCoin( )
+  }
   @Get("/:assetId")
   @ApiOkObjectResponse(GetAssetRMapper)
   getAsset( @Param('assetId')  assetId : string ) {

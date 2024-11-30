@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { IpgService } from './ipg.service';
 import { IpgRepository } from '@app/common/dataBase/mongo/repositories/ipg.repository';
-import { ThrowModule } from '@elyasbr/throw/dist/src';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Ipg, IpgSchema } from '@app/common/dataBase/mongo/schemas/ipg.schema';
 import { Bank, BankSchema } from '@app/common/dataBase/mongo/schemas/bank.schema';

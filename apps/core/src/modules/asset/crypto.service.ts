@@ -11,6 +11,7 @@ import { ArchRepository } from '@app/common/dataBase/mongo/repositories/arch.rep
 import { AssetRepository } from '@app/common/dataBase/mongo/repositories/asset.repository';
 import { DeleteResponseDto } from '@elyasbr/public/dist/src';
 import { PaginateCryptoRMapper } from './rmapper/crypto/paginate-crypto-r.mapper';
+import { GroupAssetEnum } from '@app/common/enums/group-asset.enum';
 
 @Injectable()
 export class CryptoService {
@@ -95,4 +96,5 @@ export class CryptoService {
       this.throwService.handelError(e)
     }
   }
+
 }

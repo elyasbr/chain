@@ -14,6 +14,7 @@ import { FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
 import { GetAssetRMapper } from './rmapper/asset/get-asset-r.mapper';
 import { DeleteResponseDto } from '@elyasbr/public/dist/src';
 import { PaginateAssetRMapper } from './rmapper/asset/paginate-asset-r.mapper';
+import { GroupAssetEnum } from '@app/common/enums/group-asset.enum';
 
 @Injectable()
 export class AssetService {
@@ -85,5 +86,9 @@ export class AssetService {
    } catch (e) {
      this.throwService.handelError(e)
    }
+  }
+
+  getAssetCoin() {
+    return Object.values(GroupAssetEnum)
   }
 }

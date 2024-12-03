@@ -13,9 +13,6 @@ import { FilterCryptoDto } from '../modules/asset/dtos/crypto/filter-crypto.dto'
 import { ArchService } from '../modules/arch/arch.service';
 import { ApiValidationRequest } from '@elyasbr/public/dist/src/decorators/api-validation-request.decorator';
 import { ApiForbiddenRequest } from '@elyasbr/public/dist/src/decorators/api-forbidden-request.decorator';
-import { CreateChainMongoMapper } from '../modules/chain/mapper/create-chain-mongo.mapper';
-import { CreateArchMongoMapper } from '../modules/arch/mapper/create-arch-mongo.mapper';
-import { UpdateArchMongoMapper } from '../modules/arch/mapper/update-arch-mongo.mapper';
 import { GetArchRMapper } from '../modules/arch/rmapper/get-arch-r.mapper';
 import { PaginateArchRMapper } from '../modules/arch/rmapper/paginate-arch-r.mapper';
 import { PaginateCryptoRMapper } from '../modules/asset/rmapper/crypto/paginate-crypto-r.mapper';

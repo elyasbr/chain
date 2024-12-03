@@ -16,6 +16,17 @@ export class Asset extends AbstractDocument {
   @Prop()
   slug : string
 
+  @Prop()
+  rateTrade? : number
+
+  @Prop()
+  isStableCoin? : number
+
+  @Prop()
+  groups? : string[]
+
+
+
   @Prop({
     type: String,
     enum : TypeAsset,

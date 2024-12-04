@@ -24,7 +24,7 @@ export class CreateCryptoMongoMapper extends  Crypto{
     this.isDeposit=createCryptoDto.isDeposit
     this.smartContractId = createCryptoDto.smartContractId
     this.rewardToken={
-      cryptoId : createCryptoDto.rewardToken?.cryptoId,
+      assetId : createCryptoDto.rewardToken?.assetId,
       amount : createCryptoDto.rewardToken?.amount
     }
     this.decimalBlockchain =createCryptoDto.decimalBlockchain

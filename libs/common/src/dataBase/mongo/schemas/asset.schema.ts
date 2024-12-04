@@ -14,8 +14,21 @@ import { GroupAssetEnum } from '@app/common/enums/group-asset.enum';
 export class Asset extends AbstractDocument {
 
 
-  @Prop()
+  @Prop({
+    type : String ,
+    index : true ,
+    unique : true
+  })
   slug : string
+
+  @Prop({
+    type : String ,
+    index : true ,
+    unique : true
+  })
+  symbol : string
+
+
 
   @Prop()
   rateTrade? : number
@@ -35,9 +48,6 @@ export class Asset extends AbstractDocument {
     default: TypeAsset.CRYPTO
   },)
   typeAsset : TypeAsset
-
-  @Prop()
-  symbol : string
 
   @Prop({
     default :false

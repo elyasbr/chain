@@ -6,7 +6,7 @@ import { StatusAssetEnum } from '@app/common/enums/status-asset.enum';
 @Schema()
 class rewardToken {
   @Prop()
-  cryptoId :string
+  assetId :string
 
   @Prop()
   amount : string

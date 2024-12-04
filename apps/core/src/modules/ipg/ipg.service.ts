@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ThrowService } from '@elyasbr/throw/dist/src';
-import { IpgError } from '@elyasbr/tools-chain/dist/src';
+import { CountryError, IpgError } from '@elyasbr/tools-chain/dist/src';
 import { IpgRepository } from '@app/common/dataBase/mongo/repositories/ipg.repository';
 import { CreateIpgDto } from './dtos/ipg/create-ipg.dto';
 import { CreateIpgMongoMapper } from './mapper/ipg/create-ipg-mongo.mapper';
@@ -12,6 +12,8 @@ import { DeleteResponseDto } from '@elyasbr/public/dist/src';
 import { PaginateIpgRMapper } from './rmapper/ipg/paginate-ipg-r.mapper';
 import { GetIpgRMapper } from './rmapper/ipg/get-ipg-r.mapper';
 import { FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
+import { SectionsErrorsEnum } from '@elyasbr/throw/dist/src/enums/sections-errors.enum';
+import { Err1000, ErrorType } from '@elyasbr/throw/dist/src/err';
 
 @Injectable()
 export class IpgService {
@@ -24,29 +26,22 @@ export class IpgService {
      const createIpgMongoMapper = new CreateIpgMongoMapper(createIpgDto)
      const resultIpg =   await this.ipgRepository.create(createIpgMongoMapper,[FieldsMongoEnum.UPDATED_AT])
      return await this.ipgRepository.changeField(resultIpg, [{ key: "_id", value: "ipgId" }])
-    } catch (e ) {
-      console.log(e.name)
-      console.log(e.message)
-      console.log(e.code);
-      console.log(e.code);
-      this.throwService.handelError(e)
+    } catch (e  ) {
+      this.throwService.handelError(e,SectionsErrorsEnum.IPG)
     }
-
-
   }
   async updateIpg(ipgId : string , updateIpgDto : UpdateIpgDto) {
     try {
       const updateIpgMongoMapper = new UpdateIpgMongoMapper(updateIpgDto)
       const resultIpg =  await this.ipgRepository.findOneAndUpdate({_id : ipgId} , updateIpgMongoMapper ,[FieldsMongoEnum.UPDATED_AT])
       if (!resultIpg) {
-        throw new Error(JSON.stringify(IpgError.IPG_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.IPG, ErrorType.VALIDATION_ERROR, JSON.stringify(IpgError.IPG_NOT_FOUND))
       }
       return await this.ipgRepository.changeField(resultIpg, [{ key: "_id", value: "ipgId" }])
 
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e,SectionsErrorsEnum.IPG)
     }
-
 
   }
 
@@ -54,11 +49,11 @@ export class IpgService {
     try {
       const resultIpg =  await this.ipgRepository.findOne({_id : ipgId} ,[FieldsMongoEnum.UPDATED_AT])
       if (!resultIpg) {
-        throw new Error(JSON.stringify(IpgError.IPG_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.IPG, ErrorType.VALIDATION_ERROR, JSON.stringify(IpgError.IPG_NOT_FOUND))
       }
       return await this.ipgRepository.changeField(resultIpg, [{ key: "_id", value: "ipgId" }])
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e ,SectionsErrorsEnum.IPG)
     }
 
 
@@ -67,14 +62,14 @@ export class IpgService {
     try {
       const deleteResult =  await this.ipgRepository.deleteOne({ _id :ipgId })
       if (deleteResult.deletedCount==0) {
-        throw new Error(JSON.stringify(IpgError.IPG_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.IPG, ErrorType.VALIDATION_ERROR, JSON.stringify(IpgError.IPG_NOT_FOUND))
       }
       return {
         status : true
       }
 
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e,SectionsErrorsEnum.IPG)
     }
   }
   async getPagination(filterIpgDto : FilterIpgDto):Promise<PaginateDto<PaginateIpgRMapper>> {
@@ -89,7 +84,7 @@ export class IpgService {
      const result = await this.ipgRepository.changeFieldArray(resultIpg ,[{ key : "_id" ,value :"ipgId"}])
      return new PaginateDto<PaginateIpgRMapper>(result ,filterIpgDto.page , filterIpgDto.limit , Number(count) )
    } catch (e) {
-     this.throwService.handelError(e)
+     this.throwService.handelError(e,SectionsErrorsEnum.IPG)
    }
   }
 }

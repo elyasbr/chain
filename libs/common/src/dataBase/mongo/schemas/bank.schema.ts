@@ -10,7 +10,11 @@ import { AbstractDocument, FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/s
   } ,  collection : "bank"})
 export class Bank extends AbstractDocument {
 
-  @Prop()
+  @Prop({
+    type : String ,
+    index : true ,
+    unique :true
+  })
   slug : string
 
   @Prop()

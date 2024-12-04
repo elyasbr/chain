@@ -20,9 +20,17 @@ export class UpdateStructDto {
   @ApiProperty()
   @Allow()
   @IsString({
-    message : JSON.stringify(StructError.REGEX_FIELD_STRUCT_IS_REQUIRED)
+    message : JSON.stringify(StructError.HTTP_SERVER_FIELD_STRUCT_IS_REQUIRED)
   })
-  addressServer : string
+  httpServer : string
+
+  @ApiProperty()
+  @Allow()
+  @IsString({
+    message : JSON.stringify(StructError.MICROSERVICE_FIELD_STRUCT_IS_REQUIRED)
+  })
+  microserviceServer : string
+
 
   @ApiProperty()
   @Allow()

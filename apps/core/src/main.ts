@@ -3,9 +3,18 @@ import { CoreModule } from './core.module';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ExceptionFilter } from './exception.filter';
+import { ConfigService } from '@nestjs/config';
+import * as process from 'process';
 
 async function bootstrap() {
   const app = await NestFactory.create(CoreModule);
+  const configService = app.get(ConfigService);
+  const port = configService.get<String>('MONGODB_URI');
+  console.log(process.env.NODE_ENV)
+  console.log(process.env.s1)
+  console.log(process.env.ssss)
+
+  console.log(port)
   app.useGlobalPipes(new ValidationPipe({
     whitelist : true
   }))
@@ -33,7 +42,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api-docs', app, document);
-  await app.listen(process.env.port ?? 7000);
+  await app.listen( 7000);
   console.info("http://localhost:7000/api-docs")
 }
 bootstrap();

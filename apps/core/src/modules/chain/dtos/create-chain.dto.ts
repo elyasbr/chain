@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Allow, IsBoolean, IsMongoId, IsString } from 'class-validator';
+import { Allow, IsBoolean, IsMongoId, IsNotEmpty, IsString } from 'class-validator';
 import { ChainError, StructError } from '@elyasbr/tools-chain/dist/src';
 
 export class CreateChainDto {
@@ -16,6 +16,16 @@ export class CreateChainDto {
     message : JSON.stringify(ChainError.SLUG_FIELD_CHAIN_IS_REQUIRED)
   })
   slug : string
+
+  @ApiProperty()
+  @Allow()
+  @IsString({
+    message : JSON.stringify(ChainError.SCANNER_ADDRESS_FIELD_CHAIN_IS_REQUIRED)
+  })
+  @IsNotEmpty({
+    message : JSON.stringify(ChainError.SCANNER_ADDRESS_FIELD_CHAIN_IS_REQUIRED)
+  })
+  scannerAddress :string
 
   @ApiProperty()
   @Allow()

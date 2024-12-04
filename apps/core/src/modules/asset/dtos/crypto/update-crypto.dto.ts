@@ -8,7 +8,7 @@ import { ArchError, AssetError, CryptoError } from '@elyasbr/tools-chain/dist/sr
 export class rewardToken {
   @ApiProperty()
   @Allow()
-  cryptoId :string
+  assetId :string
 
   @ApiProperty()
   @Allow()

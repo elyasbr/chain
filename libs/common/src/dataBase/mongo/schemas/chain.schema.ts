@@ -30,6 +30,9 @@ export class Chain extends AbstractDocument {
   })
   symbol : string
 
+  @Prop({
+  })
+  scannerAddress : string
 
   @Prop({
     type : Boolean ,

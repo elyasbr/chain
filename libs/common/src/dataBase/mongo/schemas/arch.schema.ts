@@ -1,6 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 
 import { AbstractDocument, FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
+import { Expression } from 'mongoose';
 
 
 @Schema({ versionKey: false ,
@@ -10,16 +11,25 @@ import { AbstractDocument, FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/s
   } ,  collection : "arch"})
 export class Arch extends AbstractDocument {
 
-  @Prop()
+  @Prop({
+  })
   chainId : string
 
-  @Prop()
+  @Prop({
+    type : String ,
+    index : true ,
+    unique : true
+  })
   slug : string
 
   @Prop()
   description? : string
 
-  @Prop()
+  @Prop({
+    type : String ,
+    index : true ,
+    unique : true
+  })
   symbol : string
 
   @Prop()

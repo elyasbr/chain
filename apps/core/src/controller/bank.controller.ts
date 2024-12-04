@@ -7,20 +7,12 @@ import {
   DeleteResponseDto,
   ResponseInterceptor,
 } from '@elyasbr/public/dist/src';
-
-import { IpgService } from '../modules/ipg/ipg.service';
-import { CreateIpgDto } from '../modules/ipg/dtos/ipg/create-ipg.dto';
-import { UpdateIpgDto } from '../modules/ipg/dtos/ipg/update-ipg.dto';
-import { FilterIpgDto } from '../modules/ipg/dtos/ipg/filter-ipg.dto';
 import { BankService } from '../modules/ipg/bank.service';
 import { CreateBankDto } from '../modules/ipg/dtos/bank/create-bank.dto';
 import { UpdateBankDto } from '../modules/ipg/dtos/bank/update-bank.dto';
 import { FilterBankDto } from '../modules/ipg/dtos/bank/filter-bank.dto';
 import { ApiValidationRequest } from '@elyasbr/public/dist/src/decorators/api-validation-request.decorator';
 import { ApiForbiddenRequest } from '@elyasbr/public/dist/src/decorators/api-forbidden-request.decorator';
-import { CreateAssetMongoMapper } from '../modules/asset/mapper/asset/create-asset-mongo.mapper';
-import { CreateBankMongoMapper } from '../modules/ipg/mapper/bank/create-bank-mongo.mapper';
-import { UpdateBankMongoMapper } from '../modules/ipg/mapper/bank/update-bank-mongo.mapper';
 import { GetBankRMapper } from '../modules/ipg/rmapper/bank/get-bank-r.mapper';
 import { PaginateBankRMapper } from '../modules/ipg/rmapper/bank/paginate-bank-r.mapper';
 
@@ -36,7 +28,6 @@ export class BankController {
 
   @Post("/")
   @ApiCreatedObjectResponse(PaginateBankRMapper)
-
   createBank(@Body() createBankDto : CreateBankDto) {
     return this.bankService.createBank(createBankDto)
   }

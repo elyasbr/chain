@@ -6,7 +6,7 @@ import { Crypto } from '@app/common/dataBase/mongo/schemas/crypto.schema';
 import { FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
 export class rewardToken {
   @ApiProperty()
-  cryptoId:string
+  assetId:string
 
   @ApiProperty()
   amount :string

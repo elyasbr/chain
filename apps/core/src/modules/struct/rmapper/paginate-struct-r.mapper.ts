@@ -17,7 +17,10 @@ export class PaginateStructRMapper extends  Struct {
   regex : string
 
   @ApiProperty()
-  addressServer : string
+  httpServer : string
+
+  @ApiProperty()
+  microserviceServer : string
 
   @ApiProperty()
   description : string

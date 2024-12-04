@@ -14,7 +14,9 @@ export class CreateStructMongoMapper extends  Struct{
     console.log(createStructDto)
     this.slug=createStructDto.slug
     this.regex=createStructDto.regex
-    this.addressServer = createStructDto.addressServer
+    this.httpServer = createStructDto.httpServer
+    this.microserviceServer = createStructDto.microserviceServer
+
     this.description=createStructDto.description
     this.symbol=createStructDto.symbol
     this.status=createStructDto.status

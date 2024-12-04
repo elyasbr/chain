@@ -10,15 +10,26 @@ import { AbstractDocument, FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/s
   } ,  collection : "country"})
 export class Country extends AbstractDocument {
 
-  @Prop()
+  @Prop({
+    type : String ,
+    index : true ,
+    unique : true
+  })
   slug : string
 
-  @Prop()
+  @Prop({
+    type : String ,
+    index : true ,
+    unique : true
+  })
   iso2 : string
 
-  @Prop()
-  iso3? : string
-
+  @Prop({
+    type : String ,
+    index : true ,
+    unique : true
+  })
+  iso3 : string
 
   @Prop({
     type : Boolean ,

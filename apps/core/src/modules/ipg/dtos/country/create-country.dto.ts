@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { TypeIpgEnum } from '@app/common/enums/type-ipg.enum';
-import { Allow, IsString } from 'class-validator';
+import { Allow, IsBoolean, IsString } from 'class-validator';
 import { CountryError } from '@elyasbr/tools-chain/dist/src';
 
 export class CreateCountryDto {
@@ -28,7 +28,7 @@ export class CreateCountryDto {
 
   @ApiProperty()
   @Allow()
-  @IsString({
+  @IsBoolean({
     message : JSON.stringify(CountryError.STATUS_FIELD_COUNTRY_IS_REQUIRED)
   })
   status :Boolean

@@ -12,6 +12,9 @@ export class UpdateIpgDto {
   @IsString({
     message: JSON.stringify(IpgError.SLUG_IPG_IS_REQUIRED),
   })
+  @IsNotEmpty({
+    message: JSON.stringify(IpgError.SLUG_IPG_IS_REQUIRED),
+  })
   slug: string;
 
   @ApiProperty({

@@ -26,7 +26,7 @@ export class UpdateCryptoMongoMapper extends  Crypto{
     this.smartContractId = updateCryptoDto.smartContractId
     this.isDeposit=updateCryptoDto.isDeposit
     this.rewardToken={
-      cryptoId : updateCryptoDto.rewardToken?.cryptoId,
+      assetId : updateCryptoDto.rewardToken?.assetId,
       amount : updateCryptoDto.rewardToken?.amount
     }
     this.decimalBlockchain =updateCryptoDto.decimalBlockchain

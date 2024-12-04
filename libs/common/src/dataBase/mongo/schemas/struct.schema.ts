@@ -1,12 +1,12 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { AbstractDocument } from '@elyasbr/dynamic-mongo/dist/src';
+import { AbstractDocument, FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
 
 
 
 @Schema({ versionKey: false  ,
   timestamps : {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    createdAt: FieldsMongoEnum.CREATED_AT,
+    updatedAt: FieldsMongoEnum.UPDATED_AT
   } , collection : "struct"})
 export class Struct extends AbstractDocument {
 
@@ -21,11 +21,12 @@ export class Struct extends AbstractDocument {
   regex : string
 
   @Prop({
-    type:String ,
-    index : true ,
-    unique : true
+
   })
-  addressServer : string
+  httpServer : string
+
+  @Prop()
+  microserviceServer : string
 
   @Prop()
   description? : string

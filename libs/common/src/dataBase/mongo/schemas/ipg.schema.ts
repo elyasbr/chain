@@ -13,7 +13,10 @@ import {  Types } from 'mongoose';
 export class Ipg extends AbstractDocument {
 
   @Prop({
-    lowercase: true
+    lowercase: true ,
+    type : String ,
+    index : true ,
+    unique : true
   })
   slug : string
 

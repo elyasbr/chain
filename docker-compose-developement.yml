@@ -1,0 +1,18 @@
+services:
+  core:
+    container_name: chainCore
+    build:
+      context: .
+      dockerfile: ./apps/core/Dockerfile
+      target: development
+    command: npm run start:dev core
+    env_file:
+      - ./apps/core/.env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '7000:7000'
+volumes:
+  mongodb_master_data:
+    driver: local

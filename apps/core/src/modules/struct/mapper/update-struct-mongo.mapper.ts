@@ -13,7 +13,8 @@ export class UpdateStructMongoMapper extends  Struct{
     super();
     this.slug=updateStructDto.slug
     this.regex=updateStructDto.regex
-    this.addressServer = updateStructDto.addressServer
+    this.httpServer = updateStructDto.httpServer
+    this.microserviceServer = updateStructDto.microserviceServer
     this.description=updateStructDto.description
     this.symbol=updateStructDto.symbol
     this.status=updateStructDto.status

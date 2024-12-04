@@ -21,6 +21,7 @@ import { CountryController } from './controller/country.controller';
 import { CryptoController } from './controller/crypto.controller';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from '@elyasbr/public/dist/src';
+import * as process from 'process';
 
 @Module({
   imports: [
@@ -28,10 +29,11 @@ import { ResponseInterceptor } from '@elyasbr/public/dist/src';
     ConfigModule.forRoot({
       isGlobal: true,
 
-      envFilePath: './apps/core/.dev.env',
+      envFilePath: './dist/.env',
     }),
     // MongoModule.register({a : 2000}) ,
-    MongooseModule.forRoot("mongodb://admin:password123@127.0.0.1:27017/") ,
+    MongooseModule.forRoot(`mongodb://root:kEfQqIL0v42B@${process.env.MONGO_REPLICA1},${process.env.MONGO_REPLICA2},` +
+      `${process.env.MONGO_REPLICA3}/admin?retryWrites=true&loadBalanced=false&replicaSet=rs0&readPreference=primary&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-1`) ,
     ThrowModule ,
     IpgModule ,
     StructModule ,
@@ -39,8 +41,10 @@ import { ResponseInterceptor } from '@elyasbr/public/dist/src';
     ArchModule ,
     AssetModule
   ],
-  controllers: [IpgController , StructController , ChainController , ArchController , AssetController ,
-  BankController , CountryController , CryptoController ],
+  controllers: [
+    IpgController , StructController , ChainController , ArchController , AssetController ,
+    BankController , CountryController , CryptoController
+  ],
   providers: [
     {
       provide: APP_INTERCEPTOR,

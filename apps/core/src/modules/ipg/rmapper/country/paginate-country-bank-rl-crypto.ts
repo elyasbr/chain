@@ -12,7 +12,7 @@ import { Crypto } from '@app/common/dataBase/mongo/schemas/crypto.schema';
 
 export class rewardToken {
   @ApiProperty()
-  cryptoId:string
+  assetId:string
 
   @ApiProperty()
   amount :string

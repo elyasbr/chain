@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ThrowService } from '@elyasbr/throw/dist/src';
-import { ArchError, AssetError, ChainError, GroupCurrencyError, StructError } from '@elyasbr/tools-chain/dist/src';
+import { AssetError } from '@elyasbr/tools-chain/dist/src';
 
 import { AssetRepository } from '@app/common/dataBase/mongo/repositories/asset.repository';
 import { CreateAssetDto } from './dtos/asset/create-asset.dto';
@@ -8,13 +8,13 @@ import { CreateAssetMongoMapper } from './mapper/asset/create-asset-mongo.mapper
 import { UpdateAssetDto } from './dtos/asset/update-asset.dto';
 import { UpdateAssetMongoMapper } from './mapper/asset/update-asset-mongo.mapper';
 import { FilterAssetDto } from './dtos/asset/filter-asset.dto';
-import { Asset } from '@app/common/dataBase/mongo/schemas/asset.schema';
 import { PaginateDto } from '@elyasbr/public/dist/src/dtos/paginate.dto';
 import { FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
 import { GetAssetRMapper } from './rmapper/asset/get-asset-r.mapper';
 import { DeleteResponseDto, JsonMethodUtl } from '@elyasbr/public/dist/src';
-import {  PaginateAssetRMapper } from './rmapper/asset/paginate-asset-r.mapper';
+import { PaginateAssetRMapper } from './rmapper/asset/paginate-asset-r.mapper';
 import { GroupAssetEnum } from '@app/common/enums/group-asset.enum';
+import { SectionsErrorsEnum } from '@elyasbr/throw/dist/src/enums/sections-errors.enum';
 
 @Injectable()
 export class AssetService {
@@ -30,7 +30,7 @@ export class AssetService {
       const resultAsset = await this.assetRepository.create(createAssetMongoMapper,[FieldsMongoEnum.UPDATED_AT ])
       return JsonMethodUtl.changeField(resultAsset , [{ key : "_id" ,value : this.assetId}])
     } catch (e) {
-        this.throwService.handelError(e)
+        this.throwService.handelError(e , SectionsErrorsEnum.ASSET)
     }
   }
   async updateAsset(assetId : string , updateAssetDto : UpdateAssetDto) {
@@ -44,7 +44,7 @@ export class AssetService {
       }
       return JsonMethodUtl.changeField(resultAsset , [{ key : "_id" ,value : this.assetId}])
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.ASSET)
     }
   }
 
@@ -57,7 +57,7 @@ export class AssetService {
 
       return JsonMethodUtl.changeField(resultAsset , [{ key : "_id" ,value : this.assetId}])
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.ASSET)
     }
   }
 
@@ -72,7 +72,7 @@ export class AssetService {
       }
 
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.ASSET)
     }
   }
   async getPagination(filterAssetDto : FilterAssetDto):Promise<PaginateDto<PaginateAssetRMapper>> {
@@ -86,7 +86,7 @@ export class AssetService {
      const result = await this.assetRepository.changeFieldArray(resultAsset , [{key : "_id" , value : this.assetId}])
      return new PaginateDto<PaginateAssetRMapper>(result ,filterAssetDto.page , filterAssetDto.limit , Number(count) )
    } catch (e) {
-     this.throwService.handelError(e)
+     this.throwService.handelError(e , SectionsErrorsEnum.ASSET)
    }
   }
 

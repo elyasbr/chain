@@ -36,9 +36,12 @@ import { PaginateCountryBankRlCrypto } from './rmapper/country/paginate-country-
 import { FilterCountryBankRlCryptoDto } from './dtos/country/filter-country-bank-rl-crypto.dto';
 import { PaginateCountryBankCryptoRlIpgRMapper } from './rmapper/country/paginate-country-bank-crypto-rl-ipg-r.mapper';
 import { FilterCountryBankCryptoRlIpgDto } from './dtos/country/filter-country-bank-crypto-rl-ipg.dto';
+import { SectionsErrorsEnum } from '@elyasbr/throw/dist/src/enums/sections-errors.enum';
+import { Err1000, ErrorType } from '@elyasbr/throw/dist/src/err';
 
 @Injectable()
 export class CountryService {
+  countryId = "countryId"
   constructor( public countryRepository : CountryRepository ,
                public bankRepository : BankRepository ,
                public archRepository : ArchRepository ,
@@ -55,9 +58,9 @@ export class CountryService {
     try {
       const createCountryMongoMapper = new CreateCountryMongoMapper(createCountryDto)
       const resultCountry =await this.countryRepository.create(createCountryMongoMapper,[FieldsMongoEnum.UPDATED_AT])
-      return  this.countryRepository.changeField(resultCountry , [{key :"_id" , value : "countryId"}])
+      return  this.countryRepository.changeField(resultCountry , [{key :"_id" , value : this.countryId}])
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.COUNTRY)
     }
 
 
@@ -67,12 +70,12 @@ export class CountryService {
       const updateCountryMongoMapper = new UpdateCountryMongoMapper(updateCountryDto)
       const resultCountry =  await this.countryRepository.findOneAndUpdate({_id : countryId} , updateCountryMongoMapper , [FieldsMongoEnum.UPDATED_AT])
       if (!resultCountry) {
-        throw new Error(JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
       }
-      return  this.countryRepository.changeField(resultCountry , [{key :"_id" , value : "countryId"}])
+      return  this.countryRepository.changeField(resultCountry , [{key :"_id" , value : this.countryId}])
 
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.COUNTRY)
     }
 
 
@@ -82,12 +85,12 @@ export class CountryService {
     try {
       const resultCountry =  await this.countryRepository.findOne({_id : ipgId} ,[FieldsMongoEnum.UPDATED_AT] )
       if (!resultCountry) {
-        throw new Error(JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
       }
-      return  this.countryRepository.changeField(resultCountry , [{key :"_id" , value : "countryId"}])
+      return  this.countryRepository.changeField(resultCountry , [{key :"_id" , value : this.countryId}])
 
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.COUNTRY)
     }
 
 
@@ -96,14 +99,14 @@ export class CountryService {
     try {
       const deleteResult =  await this.countryRepository.deleteOne({ _id : countryId  })
       if (deleteResult.deletedCount==0) {
-        throw new Error(JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
       }
       return {
         status : true
       }
 
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.COUNTRY)
     }
   }
   async getPagination(filterCountryDto : FilterCountryDto):Promise<PaginateDto<PaginateCountryRMapper>> {
@@ -115,11 +118,11 @@ export class CountryService {
         sort : [{"id" : 1}]
 
       })
-      const result = await this.countryRepository.changeFieldArray(resultCrypto , [{key : "_id" , value : "countryId"}])
+      const result = await this.countryRepository.changeFieldArray(resultCrypto , [{key : "_id" , value : this.countryId}])
       const count = this.countryRepository.getCountDocuments()
       return new PaginateDto<PaginateCountryRMapper>(result ,filterCountryDto.page , filterCountryDto.limit , Number(count) )
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.COUNTRY)
     }
   }
   async getPaginationBankFromCountry(countryId :string ,filterCountryBankDto : FilterCountryBankDto):Promise<PaginateDto<PaginateCountryBankRMapper>> {
@@ -143,7 +146,7 @@ export class CountryService {
       })
       return new PaginateDto<PaginateCountryBankRMapper>(banks ,filterCountryBankDto.page , filterCountryBankDto.limit , Number(count) )
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.COUNTRY)
     }
   }
 
@@ -151,32 +154,32 @@ export class CountryService {
     try {
       const  resultCountry = await this.countryRepository.findOne({_id : createCountryBankDto.countryId})
       if (!resultCountry) {
-        throw new Error(JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
       }
       const  resultBank = await this.bankRepository.findOne({_id : createCountryBankDto.bankId})
       if (!resultBank) {
-        throw new Error(JSON.stringify(BankError.BANK_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(BankError.BANK_NOT_FOUND))
 
       }
       const createCountryBankMongoMapper = new CreateCountryBankMongoMapper(createCountryBankDto)
       const resultCountryLBank = await this.countryRlBankRepository.create(createCountryBankMongoMapper,[FieldsMongoEnum.UPDATED_AT])
       return new PaginateCountryBankRMapper(resultCountryLBank , resultBank)
     } catch (e) {
-      this.throwService.handelError(e)
+      console.log(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.COUNTRY)
     }
   }
   async removeBankToCountry(countryBankId : string) :Promise<DeleteResponseDto> {
     try {
       const deleteResult =  await this.countryRlBankRepository.deleteOne({ _id : countryBankId  })
       if (deleteResult.deletedCount==0) {
-        throw new Error(JSON.stringify(CountryError.COUNTRY_BANK_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_NOT_FOUND))
       }
       return {
         status : true
       }
-
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.COUNTRY)
     }
   }
 
@@ -184,11 +187,11 @@ export class CountryService {
     try {
       const  resultCountryBank = await this.countryRlBankRepository.findOne({_id : createCountryBankRlCryptoDto.countryBankId})
       if (!resultCountryBank) {
-        throw new Error(JSON.stringify(CountryError.COUNTRY_BANK_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_NOT_FOUND))
       }
       const  resultCrypto = await this.cryptoRepository.findOne({_id : createCountryBankRlCryptoDto.cryptoId})
       if (!resultCrypto) {
-        throw new Error(JSON.stringify(CryptoError.CRYPTO_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_ERROR, JSON.stringify(CryptoError.CRYPTO_NOT_FOUND))
       }
       const createCountryBankCryptoMongoMapper = new CreateCountryBankCryptoMongoMapper(createCountryBankRlCryptoDto)
       const  resultCountryBankRlCrypto = await this.countryBankRlCryptoRepository.create(createCountryBankCryptoMongoMapper,[FieldsMongoEnum.UPDATED_AT])
@@ -196,7 +199,7 @@ export class CountryService {
       const resultAsset = await this.assetRepository.findOne({_id : resultCrypto.assetId})
       return new PaginateCountryBankRlCrypto(resultArch , resultAsset ,resultCrypto ,resultCountryBankRlCrypto)
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.COUNTRY)
     }
   }
 
@@ -204,14 +207,13 @@ export class CountryService {
     try {
       const deleteResult =  await this.countryBankRlCryptoRepository.deleteOne({ _id : countryBankCryptoId  })
       if (deleteResult.deletedCount==0) {
-        throw new Error(JSON.stringify(CountryError.COUNTRY_BANK_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_CRYPTO_NOT_FOUND))
       }
       return {
         status : true
       }
-
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.COUNTRY)
     }
   }
   async getPaginationCryptoFromCountryBank(countryBankId :string ,filterCountryBankRlCryptoDto : FilterCountryBankRlCryptoDto):Promise<PaginateDto<PaginateCountryBankRlCrypto>> {
@@ -239,25 +241,24 @@ export class CountryService {
       const count =await this.countryBankRlCryptoRepository.getCountDocuments()
       return new PaginateDto<PaginateCountryBankRlCrypto>(final ,filterCountryBankRlCryptoDto.page , filterCountryBankRlCryptoDto.limit , Number(count) )
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.COUNTRY)
     }
   }
   async addIpgToCountryBankCrypto(createCountryBankCryptoRlIpgDto : CreateCountryBankCryptoRlIpgDto) :Promise<PaginateCountryBankCryptoRlIpgRMapper> {
     try {
       const  resultCountry = await this.countryBankRlCryptoRepository.findOne({_id : createCountryBankCryptoRlIpgDto.countryBankCryptoId})
       if (!resultCountry) {
-        throw new Error(JSON.stringify(CountryError.COUNTRY_BANK_CRYPTO_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_CRYPTO_NOT_FOUND))
       }
-
       const  resultIpg = await this.ipgRepository.findOne({_id : createCountryBankCryptoRlIpgDto.ipgId})
       if (!resultIpg) {
-        throw new Error(JSON.stringify(IpgError.IPG_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.IPG, ErrorType.VALIDATION_ERROR, JSON.stringify(IpgError.IPG_NOT_FOUND))
       }
       const createCountryBankCryptoIpgMongoMapper = new CreateCountryBankCryptoIpgMongoMapper(createCountryBankCryptoRlIpgDto)
       const createCountryBankCryptoRlIpg = await this.countryBankCryptoRlIpgRepository.create(createCountryBankCryptoIpgMongoMapper,[FieldsMongoEnum.UPDATED_AT])
       return new PaginateCountryBankCryptoRlIpgRMapper(resultIpg, createCountryBankCryptoRlIpg)
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.COUNTRY)
     }
   }
 
@@ -265,13 +266,13 @@ export class CountryService {
     try {
       const deleteResult =  await this.countryBankCryptoRlIpgRepository.deleteOne({ _id : countryBankCryptoIpg  })
       if (deleteResult.deletedCount==0) {
-        throw new Error(JSON.stringify(CountryError.COUNTRY_BANK_CRYPTO_IPG_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_CRYPTO_IPG_NOT_FOUND))
       }
       return {
         status : true
       }
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e ,SectionsErrorsEnum.IPG)
     }
   }
 
@@ -295,7 +296,7 @@ export class CountryService {
       const count =await this.countryBankRlCryptoRepository.getCountDocuments()
       return new PaginateDto<PaginateCountryBankCryptoRlIpgRMapper>(final ,filterCountryBankCryptoRlIpgDto.page , filterCountryBankCryptoRlIpgDto.limit , Number(count) )
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.COUNTRY)
     }
   }
 }

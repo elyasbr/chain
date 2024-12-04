@@ -7,7 +7,7 @@ import {
   IS_DATE,
   IsBoolean,
   IsDate,
-  IsDateString,
+  IsDateString, IsEmpty,
   IsEnum,
   IsNumber,
   IsOptional,
@@ -16,6 +16,7 @@ import {
 } from 'class-validator';
 import { AssetError } from '@elyasbr/tools-chain/dist/src';
 import { Type } from 'class-transformer';
+import { GroupAssetEnum } from '@app/common/enums/group-asset.enum';
 
 export class CreateAssetDto {
   @ApiProperty()
@@ -24,6 +25,34 @@ export class CreateAssetDto {
     message : JSON.stringify(AssetError.SLUG_FIELD_ASSET_IS_REQUIRED)
   })
   slug : string
+
+  @ApiProperty()
+  @Allow()
+  @IsString({
+    message : JSON.stringify(AssetError.SYMBOL_FIELD_ASSET_IS_REQUIRED)
+  })
+  symbol : string
+
+  @ApiProperty()
+  @Allow()
+  @IsNumber({} ,{
+    message : JSON.stringify(AssetError.RATE_TRADE_FIELD_ASSET_IS_REQUIRED)
+  })
+  rateTrade : number
+
+  @ApiProperty()
+  @Allow()
+  @IsNumber({} ,{
+    message : JSON.stringify(AssetError.RATE_WITHDRAW_FIELD_ASSET_IS_REQUIRED)
+  })
+  rateWithdarw : number
+
+  @ApiProperty()
+  @Allow()
+  @IsString({
+    message : JSON.stringify(AssetError.IS_STABLE_COIN_FIELD_ASSET_IS_REQUIRED)
+  })
+  isStableCoin : Boolean
 
   @ApiProperty({
     enum : TypeAsset ,
@@ -35,12 +64,14 @@ export class CreateAssetDto {
   })
   typeAsset : TypeAsset
 
-  @ApiProperty()
-  @Allow()
-  @IsString({
-    message : JSON.stringify(AssetError.SYMBOL_FIELD_ASSET_IS_REQUIRED)
+
+
+  @ApiProperty({
+    enum : GroupAssetEnum ,
+    isArray : true
   })
-  symbol : string
+  @Allow()
+  groupCurrency : GroupAssetEnum[]
 
   @ApiProperty()
   @Allow()
@@ -101,7 +132,10 @@ export class CreateAssetDto {
   decimalCalc : number
 
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    example:"https://google.com?q=iconfile.svg"
+
+  })
   @Allow()
   // @IsUrl({require_host : true } ,{
   //   message : JSON.stringify(AssetError.LOGO_FIELD_ASSET_IS_REQUIRED)

@@ -40,7 +40,7 @@ import { ResponseInterceptor } from '@elyasbr/public/dist/src';
     AssetModule
   ],
   controllers: [IpgController , StructController , ChainController , ArchController , AssetController ,
-  BankController , CountryController , CryptoController],
+  BankController , CountryController , CryptoController ],
   providers: [
     {
       provide: APP_INTERCEPTOR,

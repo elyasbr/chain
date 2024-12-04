@@ -3,6 +3,7 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractDocument, FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
 import { TypeAsset } from '@app/common/enums/type-asset.enum';
 import { StatusAssetEnum } from '@app/common/enums/status-asset.enum';
+import { GroupAssetEnum } from '@app/common/enums/group-asset.enum';
 
 
 @Schema({ versionKey: false ,
@@ -20,12 +21,13 @@ export class Asset extends AbstractDocument {
   rateTrade? : number
 
   @Prop()
-  isStableCoin? : number
+  rateWithdarw? : number
 
   @Prop()
-  groups? : string[]
+  isStableCoin? : Boolean
 
-
+  @Prop()
+  groupCurrency? : GroupAssetEnum[]
 
   @Prop({
     type: String,

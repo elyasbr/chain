@@ -21,6 +21,10 @@ export class CreateAssetMongoMapper extends  Asset{
     super();
     this.slug=createAssetDto.slug
     this.symbol = createAssetDto.symbol
+    this.groupCurrency=createAssetDto.groupCurrency
+    this.rateWithdarw = createAssetDto.rateWithdarw
+    this.rateTrade = createAssetDto.rateTrade
+    this.isStableCoin = createAssetDto.isStableCoin
     this.logo=createAssetDto.logo
     this.isDeposit = createAssetDto.isDeposit
     this.isWithdraw=createAssetDto.isWithdraw

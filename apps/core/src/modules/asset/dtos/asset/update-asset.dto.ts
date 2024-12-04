@@ -2,8 +2,10 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { TypeAsset } from '@app/common/enums/type-asset.enum';
 import { StatusAssetEnum } from '@app/common/enums/status-asset.enum';
 import { Prop } from '@nestjs/mongoose';
-import { Allow, IsBoolean, IsDate, IsEnum, IsNumber, IsString, IsUrl } from 'class-validator';
+import { Allow, IsBoolean, IsDate, IsEmpty, IsEnum, IsNumber, IsOptional, IsString, IsUrl } from 'class-validator';
 import { AssetError } from '@elyasbr/tools-chain/dist/src';
+import { Type } from 'class-transformer';
+import { GroupAssetEnum } from '@app/common/enums/group-asset.enum';
 
 export class UpdateAssetDto {
   @ApiProperty()
@@ -12,6 +14,34 @@ export class UpdateAssetDto {
     message : JSON.stringify(AssetError.SLUG_FIELD_ASSET_IS_REQUIRED)
   })
   slug : string
+
+  @ApiProperty()
+  @Allow()
+  @IsString({
+    message : JSON.stringify(AssetError.SYMBOL_FIELD_ASSET_IS_REQUIRED)
+  })
+  symbol : string
+
+  @ApiProperty()
+  @Allow()
+  @IsNumber({} ,{
+    message : JSON.stringify(AssetError.RATE_TRADE_FIELD_ASSET_IS_REQUIRED)
+  })
+  rateTrade : number
+
+  @ApiProperty()
+  @Allow()
+  @IsNumber({} ,{
+    message : JSON.stringify(AssetError.RATE_WITHDRAW_FIELD_ASSET_IS_REQUIRED)
+  })
+  rateWithdarw : number
+
+  @ApiProperty()
+  @Allow()
+  @IsString({
+    message : JSON.stringify(AssetError.IS_STABLE_COIN_FIELD_ASSET_IS_REQUIRED)
+  })
+  isStableCoin : Boolean
 
   @ApiProperty({
     enum : TypeAsset ,
@@ -23,12 +53,14 @@ export class UpdateAssetDto {
   })
   typeAsset : TypeAsset
 
-  @ApiProperty()
-  @Allow()
-  @IsString({
-    message : JSON.stringify(AssetError.SYMBOL_FIELD_ASSET_IS_REQUIRED)
+
+
+  @ApiProperty({
+    enum : GroupAssetEnum ,
+    isArray : true
   })
-  symbol : string
+  @Allow()
+  groupCurrency : GroupAssetEnum[]
 
   @ApiProperty()
   @Allow()
@@ -51,6 +83,7 @@ export class UpdateAssetDto {
   @IsDate({
     message : JSON.stringify(AssetError.START_DEPOSIT_FIELD_ASSET_IS_REQUIRED)
   })
+  @Type(() => Date)
   startDeposit : Date
 
   @ApiProperty({
@@ -60,7 +93,8 @@ export class UpdateAssetDto {
   @IsDate({
     message : JSON.stringify(AssetError.START_WITHDRAW_FIELD_ASSET_IS_REQUIRED)
   })
-  startWithdraw? : Date
+  @Type(() => Date)
+  startWithdraw : Date
 
   @ApiProperty({
     example : (new Date(Date.now())).toJSON()
@@ -69,6 +103,7 @@ export class UpdateAssetDto {
   @IsDate({
     message : JSON.stringify(AssetError.START_TRADE_FIELD_ASSET_IS_REQUIRED)
   })
+  @Type(() => Date)
   startTrade : Date
 
   @ApiPropertyOptional()
@@ -86,11 +121,14 @@ export class UpdateAssetDto {
   decimalCalc : number
 
 
-  @ApiPropertyOptional()
-  @Allow()
-  @IsUrl({} ,{
-    message : JSON.stringify(AssetError.LOGO_FIELD_ASSET_IS_REQUIRED)
+  @ApiPropertyOptional({
+    example:"https://google.com?q=iconfile.svg"
   })
+  @Allow()
+  // @IsUrl({require_host : true } ,{
+  //   message : JSON.stringify(AssetError.LOGO_FIELD_ASSET_IS_REQUIRED)
+  // })
+  @IsOptional()
   logo : string
 
   @ApiProperty({

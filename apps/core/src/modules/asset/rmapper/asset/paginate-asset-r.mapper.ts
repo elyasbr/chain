@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { StatusAssetEnum } from '@app/common/enums/status-asset.enum';
 import { TypeAsset } from '@app/common/enums/type-asset.enum';
-
+import { Asset } from '@app/common/dataBase/mongo/schemas/asset.schema';
+import { GroupAssetEnum } from '@app/common/enums/group-asset.enum';
 export class PaginateAssetRMapper {
   @ApiProperty()
   assetId : string
@@ -14,6 +15,21 @@ export class PaginateAssetRMapper {
 
   @ApiProperty()
   logo : string
+
+  @ApiProperty()
+  rateTrade : number
+
+  @ApiProperty()
+  rateWithdraw : number
+
+  @ApiProperty({
+    enum : GroupAssetEnum ,
+    isArray : true
+  })
+  groups : GroupAssetEnum[]
+
+  @ApiProperty()
+  isStableCoin : Boolean
 
   @ApiProperty()
   isDeposit : Boolean
@@ -53,4 +69,5 @@ export class PaginateAssetRMapper {
     default : (new Date()).toJSON()
   })
   created_at : Date
+
 }

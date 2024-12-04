@@ -14,12 +14,11 @@ import { ArchRepository } from '@app/common/dataBase/mongo/repositories/arch.rep
     MongooseModule.forFeature([
       { name: Asset.name, schema: AssetSchema  } ,
       { name: Crypto.name, schema: CryptoSchema  } ,
-      { name: Arch.name, schema: ArchSchema  } ,
-
+      { name: Arch.name, schema: ArchSchema  }
     ])
   ] ,
-  providers :[ AssetService , CryptoService , AssetRepository , CryptoRepository ,ArchRepository],
-  exports :[ AssetService , CryptoService]
+  providers :[ AssetService , CryptoService, AssetRepository , CryptoRepository ,ArchRepository ],
+  exports :[ AssetService , CryptoService ]
 
 
 })

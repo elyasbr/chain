@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ThrowService } from '@elyasbr/throw/dist/src';
-import { ArchError, AssetError, ChainError, StructError } from '@elyasbr/tools-chain/dist/src';
+import { ArchError, AssetError, ChainError, GroupCurrencyError, StructError } from '@elyasbr/tools-chain/dist/src';
 
 import { AssetRepository } from '@app/common/dataBase/mongo/repositories/asset.repository';
 import { CreateAssetDto } from './dtos/asset/create-asset.dto';
@@ -12,36 +12,37 @@ import { Asset } from '@app/common/dataBase/mongo/schemas/asset.schema';
 import { PaginateDto } from '@elyasbr/public/dist/src/dtos/paginate.dto';
 import { FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
 import { GetAssetRMapper } from './rmapper/asset/get-asset-r.mapper';
-import { DeleteResponseDto } from '@elyasbr/public/dist/src';
-import { PaginateAssetRMapper } from './rmapper/asset/paginate-asset-r.mapper';
+import { DeleteResponseDto, JsonMethodUtl } from '@elyasbr/public/dist/src';
+import {  PaginateAssetRMapper } from './rmapper/asset/paginate-asset-r.mapper';
 import { GroupAssetEnum } from '@app/common/enums/group-asset.enum';
 
 @Injectable()
 export class AssetService {
+  assetId = "assetId"
   constructor( public assetRepository : AssetRepository ,
-               public throwService : ThrowService) {
+               public throwService : ThrowService ) {
   }
   async createAsset(createAssetDto : CreateAssetDto) {
     try{
-    console.log("start")
+
+
       const createAssetMongoMapper = new CreateAssetMongoMapper(createAssetDto)
-      const resultAsset = await this.assetRepository.create(createAssetMongoMapper,[FieldsMongoEnum.UPDATED_AT])
-      return this.assetRepository.changeField(resultAsset , [{ key : "_id" ,value : "assetId"}])
+      const resultAsset = await this.assetRepository.create(createAssetMongoMapper,[FieldsMongoEnum.UPDATED_AT ])
+      return JsonMethodUtl.changeField(resultAsset , [{ key : "_id" ,value : this.assetId}])
     } catch (e) {
         this.throwService.handelError(e)
     }
-
-
   }
   async updateAsset(assetId : string , updateAssetDto : UpdateAssetDto) {
     try {
+
       const updateAssetMongoMapper = new UpdateAssetMongoMapper(updateAssetDto)
-      const resultAsset =  await this.assetRepository.findOneAndUpdate({_id : assetId} , updateAssetMongoMapper ,[FieldsMongoEnum.UPDATED_AT])
+      const resultAsset =  await this.assetRepository.findOneAndUpdate({_id : assetId} , updateAssetMongoMapper ,
+        [FieldsMongoEnum.UPDATED_AT , "groupCurrencyIds"])
       if (!resultAsset) {
         throw new Error(JSON.stringify(AssetError.ASSET_NOT_FOUND))
       }
-       return await this.assetRepository.changeField(resultAsset ,[{ key : "_id" , value : "assetId"}])
-
+      return JsonMethodUtl.changeField(resultAsset , [{ key : "_id" ,value : this.assetId}])
     } catch (e) {
       this.throwService.handelError(e)
     }
@@ -49,11 +50,12 @@ export class AssetService {
 
   async getAsset(assetId : string ) : Promise<GetAssetRMapper> {
     try {
-      const resultAsset =  await this.assetRepository.findOne({_id : assetId} ,[FieldsMongoEnum.UPDATED_AT] )
+      const resultAsset =  await this.assetRepository.findOne({_id : assetId} ,[FieldsMongoEnum.UPDATED_AT ,"groupCurrencyIds"] )
       if (!resultAsset) {
         throw new Error(JSON.stringify(AssetError.ASSET_NOT_FOUND))
       }
-      return this.assetRepository.changeField(resultAsset ,[{ key : "_id" , value : "assetId"}])
+
+      return JsonMethodUtl.changeField(resultAsset , [{ key : "_id" ,value : this.assetId}])
     } catch (e) {
       this.throwService.handelError(e)
     }
@@ -81,7 +83,7 @@ export class AssetService {
        sort : [{"id" : 1}]
      })
      const count = this.assetRepository.getCountDocuments()
-     const result = await this.assetRepository.changeFieldArray(resultAsset , [{key : "_id" , value : "assetId"}])
+     const result = await this.assetRepository.changeFieldArray(resultAsset , [{key : "_id" , value : this.assetId}])
      return new PaginateDto<PaginateAssetRMapper>(result ,filterAssetDto.page , filterAssetDto.limit , Number(count) )
    } catch (e) {
      this.throwService.handelError(e)

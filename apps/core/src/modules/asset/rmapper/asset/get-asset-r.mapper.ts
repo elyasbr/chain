@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { StatusAssetEnum } from '@app/common/enums/status-asset.enum';
 import { TypeAsset } from '@app/common/enums/type-asset.enum';
+import { GroupAssetEnum } from '@app/common/enums/group-asset.enum';
 
 export class GetAssetRMapper {
 
@@ -15,6 +16,21 @@ export class GetAssetRMapper {
 
   @ApiProperty()
   logo : string
+
+  @ApiProperty()
+  rateTrade : number
+
+  @ApiProperty()
+  rateWithdraw : number
+
+  @ApiProperty({
+    enum : GroupAssetEnum ,
+    isArray : true
+  })
+  groups : GroupAssetEnum[]
+
+  @ApiProperty()
+  isStableCoin : Boolean
 
   @ApiProperty()
   isDeposit : Boolean

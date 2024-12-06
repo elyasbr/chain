@@ -27,33 +27,36 @@ export class BankController {
   constructor(private readonly bankService: BankService) {}
 
   @Post("/")
+  @ApiOperation({summary : "Create Bank"})
   @ApiCreatedObjectResponse(PaginateBankRMapper)
   createBank(@Body() createBankDto : CreateBankDto) {
     return this.bankService.createBank(createBankDto)
   }
 
   @Put("/:bankId")
+  @ApiOperation({summary : "Update Bank"})
   @ApiOkObjectResponse(PaginateBankRMapper)
   updateBank( @Param('bankId')  bankId : string ,@Body() updateBankDto : UpdateBankDto) {
     return this.bankService.updateBank(bankId ,updateBankDto)
   }
 
   @Get("/:bankId")
+  @ApiOperation({summary : "Get Bank"})
   @ApiOkObjectResponse(GetBankRMapper)
   getBank( @Param('bankId')  bankId : string ) {
     return this.bankService.getBank(bankId )
   }
 
   @Delete("/:bankId")
-  @ApiOkObjectResponse(DeleteResponseDto)
   @ApiOperation({deprecated :false , summary : "Delete Bank" })
+  @ApiOkObjectResponse(DeleteResponseDto)
   deleteBank( @Param('bankId')  bankId : string ) {
     return this.bankService.deleteBank(bankId )
   }
 
   @Post("/pagination")
-  @ApiCreatedObjectResponse(PaginateBankRMapper)
   @ApiOperation({deprecated :false , summary : "Pagination Bank" })
+  @ApiCreatedObjectResponse(PaginateBankRMapper)
   getPagination(@Body() filterBankDto : FilterBankDto) {
     return this.bankService.getPagination(filterBankDto)
   }

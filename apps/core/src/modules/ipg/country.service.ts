@@ -159,10 +159,11 @@ export class CountryService {
       const  resultBank = await this.bankRepository.findOne({_id : createCountryBankDto.bankId})
       if (!resultBank) {
         throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(BankError.BANK_NOT_FOUND))
-
       }
       const createCountryBankMongoMapper = new CreateCountryBankMongoMapper(createCountryBankDto)
-      const resultCountryLBank = await this.countryRlBankRepository.create(createCountryBankMongoMapper,[FieldsMongoEnum.UPDATED_AT])
+      const resultCountryLBank = await this.countryRlBankRepository.create(createCountryBankMongoMapper,
+        [FieldsMongoEnum.UPDATED_AT] ,[] )
+
       return new PaginateCountryBankRMapper(resultCountryLBank , resultBank)
     } catch (e) {
       console.log(e)

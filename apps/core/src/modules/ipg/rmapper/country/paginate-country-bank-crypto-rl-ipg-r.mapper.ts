@@ -10,6 +10,8 @@ import { Crypto } from '@app/common/dataBase/mongo/schemas/crypto.schema';
 import { TypeIpgEnum } from '@app/common/enums/type-ipg.enum';
 import { Ipg } from '@app/common/dataBase/mongo/schemas/ipg.schema';
 import { CountryBankCryptoRlIpg } from '@app/common/dataBase/mongo/schemas/country-bank-crypto-rl-ipg.schema';
+import { LinkBackendIpgDto } from '../../dtos/ipg/link-backend-ipg.dto';
+import { CallBackBackendIpgDto } from '../../dtos/ipg/call-back-backend-ipg.dto';
 
 
 export class PaginateCountryBankCryptoRlIpgRMapper {
@@ -23,13 +25,13 @@ export class PaginateCountryBankCryptoRlIpgRMapper {
   slugIpg : string
 
   @ApiProperty()
-  link : string
+  linkBackend : LinkBackendIpgDto
 
   @ApiProperty()
   frontLink : string
 
   @ApiProperty()
-  callBack : string
+  callBackBackend : CallBackBackendIpgDto
 
   @ApiProperty()
   frontCallBack : string
@@ -53,9 +55,9 @@ export class PaginateCountryBankCryptoRlIpgRMapper {
     this.ipgId = ipg['id'].toString()
     this.slugIpg = ipg.slug
     this.typeIpg = ipg.typeIpg
-    this.link = ipg.link
+    this.linkBackend = ipg.linkBackend
     this.frontLink = ipg.frontLink
-    this.callBack = ipg.callBack
+    this.callBackBackend = ipg.callBackBackend
     this.frontCallBack = ipg.frontCallBack
     this.status = ipg.status
     this.created_at = countryBankCryptoIpg[FieldsMongoEnum.CREATED_AT]

@@ -1,62 +1,88 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { TypeIpgEnum } from '@app/common/enums/type-ipg.enum';
-import { Allow, IsEmpty, IsEnum, IsNotEmpty, IsString, IsUrl } from 'class-validator';
+import {
+  Allow,
+  IsArray, IsBoolean,
+  IsEmpty,
+  IsEnum,
+  IsNotEmpty,
+  IsObject,
+  IsString,
+  IsUrl,
+  ValidateNested,
+} from 'class-validator';
 import { IpgError } from '@elyasbr/tools-chain/dist/src';
-import { PublicError } from '@elyasbr/public/dist/src';
+import { MethodsEnum, PublicError } from '@elyasbr/public/dist/src';
+import { LinkBackendIpgDto } from './link-backend-ipg.dto';
+import { CallBackBackendIpgDto } from './call-back-backend-ipg.dto';
+import { Type } from 'class-transformer';
+
 
 export class CreateIpgDto {
   @ApiProperty({
-    example : "ipg1"
+    example : "ipg1" ,
+    description :"slug of ipg" ,
+    required : true
   })
   @IsString({
     message: JSON.stringify(IpgError.SLUG_IPG_IS_REQUIRED),
   })
   @IsNotEmpty({
-    message: JSON.stringify(IpgError.SLUG_IPG_IS_REQUIRED),
+    message: JSON.stringify(IpgError.SLUG_IPG_IS_EMPTY),
   })
   slug: string;
 
   @ApiProperty({
-    example : "http://www.gmail.com"
+    description :"link get data from backend ipg" ,
+    type : LinkBackendIpgDto ,
+    required : true
   })
-  @IsString({
-    message: JSON.stringify(IpgError.LINK_IPG_IS_REQUIRED),
+  @IsObject({
+    message: JSON.stringify(IpgError.LINK_BACKEND_IPG_IS_REQUIRED),
   })
-  @IsUrl({
-    require_host: true,
-  }, { message: JSON.stringify(PublicError.URL_IS_INVALID) })
-  link: string;
+  @ValidateNested({ each: true ,
+    message: JSON.stringify(IpgError.LINK_BACKEND_IPG_IS_REQUIRED),
+  })
+  @Type(() => LinkBackendIpgDto)
+  linkBackend: LinkBackendIpgDto;
 
 
   @ApiProperty({
-    example : "http://www.gmail.com"
+    example : "http://www.gmail.com" ,
+    required : true
   })
   @IsString({
-    message: JSON.stringify(IpgError.LINK_FRONT_IPG_IS_REQUIRED),
+    message: JSON.stringify(IpgError.FRONT_LINK_IPG_IS_REQUIRED),
+  })
+  @IsNotEmpty({
+    message : JSON.stringify(IpgError.FRONT_LINK_IPG_IS_EMPTY)
   })
   frontLink: string;
 
   @ApiProperty({
-    example : "http://www.google.com"
+    description :"link get data from call backend ipg" ,
+    required : true
   })
-  @IsString({
-    message: JSON.stringify(IpgError.CALL_BACK_IPG_IS_REQUIRED),
+  @IsObject({
+    message: JSON.stringify(IpgError.CALL_BACK_BACKEND_IPG_IS_REQUIRED),
   })
-  @IsUrl({
-    require_host: true,
-  }, { message: JSON.stringify(PublicError.URL_IS_INVALID) })
-  callBack: string;
+  callBackBackend: CallBackBackendIpgDto;
 
   @ApiProperty({
-    example : "http://www.gmail.com"
+    example : "http://www.gmail.com" ,
+    required : true
   })
   @IsString({
-    message: JSON.stringify(IpgError.CALL_BACK_FRONT_IPG_IS_REQUIRED),
+    message: JSON.stringify(IpgError.FRONT_CALL_BACK_IPG_IS_REQUIRED),
+  })
+  @IsNotEmpty({
+    message : JSON.stringify(IpgError.FRONT_CALL_BACK_IPG_IS_EMPTY)
   })
   frontCallBack: string;
 
   @ApiProperty({
     enum: TypeIpgEnum,
+    required : true ,
     example: TypeIpgEnum.CRYPTO,
   })
   @IsEnum(TypeIpgEnum, {
@@ -64,9 +90,10 @@ export class CreateIpgDto {
   })
   typeIpg: TypeIpgEnum;
 
-
-  @ApiProperty()
-  @IsNotEmpty({
+  @ApiProperty({
+    required : true
+  })
+  @IsBoolean({
     message : JSON.stringify(IpgError.STATUS_IPG_IS_REQUIRED)
   })
   status: Boolean;

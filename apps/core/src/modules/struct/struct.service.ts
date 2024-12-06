@@ -6,7 +6,7 @@ import { CreateStructMongoMapper } from './mapper/create-struct-mongo.mapper';
 import { ThrowService } from '@elyasbr/throw/dist/src';
 import { UpdateStructDto } from './dtos/update-struct.dto';
 import { UpdateStructMongoMapper } from './mapper/update-struct-mongo.mapper';
-import { IpgError, StructError } from '@elyasbr/tools-chain/dist/src';
+import { StructError } from '@elyasbr/tools-chain/dist/src';
 import { ChainRepository } from '@app/common/dataBase/mongo/repositories/chain.repository';
 import { PaginateDto } from '@elyasbr/public/dist/src/dtos/paginate.dto';
 import { DeleteResponseDto } from '@elyasbr/public/dist/src';
@@ -32,7 +32,7 @@ export class StructService {
      return  this.structRepository.changeField(resultStruct ,[{key:"_id" , value : this.structId}])
       return
     } catch (e) {
-      console.log(e)
+
         this.throwService.handelError(e ,SectionsErrorsEnum.STRUCT)
     }
 
@@ -53,16 +53,17 @@ export class StructService {
 
   }
 
-  async getStruct(idStruct : string ):Promise<GetStructRMapper> {
+  async getStruct(structId : string ):Promise<GetStructRMapper> {
     try {
-      const resultStruct =  await this.structRepository.findOne({_id : idStruct} ,[FieldsMongoEnum.UPDATED_AT] )
-      if (!resultStruct) {
+
+      const resultStruct =  await this.structRepository.findOne({_id : structId} ,[FieldsMongoEnum.UPDATED_AT] )
+      if (resultStruct==null) {
         throw new Err1000(SectionsErrorsEnum.STRUCT, ErrorType.VALIDATION_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
       }
       return await this.structRepository.changeField(resultStruct, [{ key: "_id", value: this.structId }])
 
     } catch (e) {
-      this.throwService.handelError(e)
+      this.throwService.handelError(e , SectionsErrorsEnum.STRUCT)
     }
 
 
@@ -115,7 +116,7 @@ export class StructService {
         sort : [{"id" : 1}]
       })
       const count = this.structRepository.getCountDocuments()
-      const result = await this.chainRepository.changeFieldArray(resultChain ,[{ key : "_id" ,value :"id"}])
+      const result = await this.chainRepository.changeFieldArray(resultChain ,[{ key : "_id" ,value : "chainId"}])
 
       return new PaginateDto<PaginateChainRMapper>(result ,filterChainsOfStructDto.page , filterChainsOfStructDto.limit , Number(count) )
     } catch (e) {

@@ -38,7 +38,7 @@ export class ArchService {
       const resultArch = await this.archRepository.create(createArchMongoMapper ,[FieldsMongoEnum.UPDATED_AT])
       return await this.archRepository.changeField(resultArch , [{key : "_id" , value : this.archId}])
     } catch (e) {
-      console.log(e)
+
         this.throwService.handelError(e,SectionsErrorsEnum.ARCH)
     }
 

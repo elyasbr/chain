@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, UseInterceptors } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   ApiCreatedArrayResponse,
   ApiCreatedObjectResponse,
@@ -17,6 +17,10 @@ import { ApiForbiddenRequest } from '@elyasbr/public/dist/src/decorators/api-for
 import { CreateChainMongoMapper } from '../modules/chain/mapper/create-chain-mongo.mapper';
 import { UpdateChainMongoMapper } from '../modules/chain/mapper/update-chain-mongo.mapper';
 import { PaginateChainRMapper } from '../modules/chain/rmapper/paginate-chain-r.mapper';
+import { PaginateStructRMapper } from '../modules/struct/rmapper/paginate-struct-r.mapper';
+import { FilterChainsOfStructDto } from '../modules/struct/dtos/filter-chains-of-struct.dto';
+import { FilterArchOfChainDto } from '../modules/chain/dtos/filter-arch-of-chain.dto';
+import { PaginateArchRMapper } from '../modules/arch/rmapper/paginate-arch-r.mapper';
 
 @Controller({
   path : "blockchain/chain" ,
@@ -29,33 +33,44 @@ export class ChainController {
   constructor(private readonly chainService: ChainService) {}
 
   @Post("/")
+  @ApiOperation({summary : "Create Chain"})
   @ApiCreatedObjectResponse(  PaginateChainRMapper)
   createChain(@Body() createChainDto : CreateChainDto) {
     return this.chainService.createChain(createChainDto)
   }
 
   @Put("/:chainId")
+  @ApiOperation({summary : "Update Chain"})
   @ApiOkObjectResponse(  PaginateChainRMapper)
   updateChain( @Param('chainId')  chainId : string ,@Body() updateChainDto : UpdateChainDto) {
     return this.chainService.updateChain(chainId ,updateChainDto)
   }
 
   @Get("/:chainId")
+  @ApiOperation({summary : "Get Chain"})
   @ApiOkObjectResponse(GetChainRMapper)
   getChain( @Param('chainId')  chainId : string ) {
     return this.chainService.getChain(chainId )
   }
 
   @Delete("/:chainId")
+  @ApiOperation({summary : "Delete Chain"})
   @ApiOkObjectResponse(  DeleteResponseDto)
   deleteChain( @Param('chainId')  chainId : string ) {
     return this.chainService.deleteChain(chainId )
   }
 
   @Post("/pagination")
+  @ApiOperation({summary : "Pagination Chain"})
   @ApiCreatedArrayResponse( PaginateChainRMapper)
-
   getPagination(@Body() filterChainDto : FilterChainDto) {
     return this.chainService.getPagination(filterChainDto)
+  }
+
+  @Post("/pagination/arch/:chainId")
+  @ApiOperation({ summary: 'Pagination Arch  From Chain'  })
+  @ApiCreatedArrayResponse( PaginateArchRMapper)
+  getPaginationArchFromChain(@Param('chainId')  chainId : string  ,@Body() filterArchOfChainDto : FilterArchOfChainDto) {
+    return this.chainService.getPaginationArchFromChain(chainId  ,filterArchOfChainDto)
   }
 }

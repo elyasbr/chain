@@ -17,6 +17,7 @@ import { Err1000, ErrorType } from '@elyasbr/throw/dist/src/err';
 
 @Injectable()
 export class IpgService {
+  ipgId = "ipgId"
   constructor( public ipgRepository : IpgRepository ,
 
                public throwService : ThrowService) {
@@ -25,7 +26,7 @@ export class IpgService {
     try {
      const createIpgMongoMapper = new CreateIpgMongoMapper(createIpgDto)
      const resultIpg =   await this.ipgRepository.create(createIpgMongoMapper,[FieldsMongoEnum.UPDATED_AT])
-     return await this.ipgRepository.changeField(resultIpg, [{ key: "_id", value: "ipgId" }])
+     return await this.ipgRepository.changeField(resultIpg, [{ key: "_id", value: this.ipgId }])
     } catch (e  ) {
       this.throwService.handelError(e,SectionsErrorsEnum.IPG)
     }
@@ -37,7 +38,7 @@ export class IpgService {
       if (!resultIpg) {
         throw new Err1000(SectionsErrorsEnum.IPG, ErrorType.VALIDATION_ERROR, JSON.stringify(IpgError.IPG_NOT_FOUND))
       }
-      return await this.ipgRepository.changeField(resultIpg, [{ key: "_id", value: "ipgId" }])
+      return await this.ipgRepository.changeField(resultIpg, [{ key: "_id", value: this.ipgId }])
 
     } catch (e) {
       this.throwService.handelError(e,SectionsErrorsEnum.IPG)
@@ -51,7 +52,7 @@ export class IpgService {
       if (!resultIpg) {
         throw new Err1000(SectionsErrorsEnum.IPG, ErrorType.VALIDATION_ERROR, JSON.stringify(IpgError.IPG_NOT_FOUND))
       }
-      return await this.ipgRepository.changeField(resultIpg, [{ key: "_id", value: "ipgId" }])
+      return await this.ipgRepository.changeField(resultIpg, [{ key: "_id", value: this.ipgId }])
     } catch (e) {
       this.throwService.handelError(e ,SectionsErrorsEnum.IPG)
     }
@@ -81,7 +82,7 @@ export class IpgService {
        limit : filterIpgDto.limit
      })
      const count = await this.ipgRepository.getCountDocuments()
-     const result = await this.ipgRepository.changeFieldArray(resultIpg ,[{ key : "_id" ,value :"ipgId"}])
+     const result = await this.ipgRepository.changeFieldArray(resultIpg ,[{ key : "_id" ,value : this.ipgId}])
      return new PaginateDto<PaginateIpgRMapper>(result ,filterIpgDto.page , filterIpgDto.limit , Number(count) )
    } catch (e) {
      this.throwService.handelError(e,SectionsErrorsEnum.IPG)

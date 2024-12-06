@@ -25,15 +25,18 @@ export class GetIpgRMapper  {
   frontCallBack : string
 
   @ApiProperty({
-    enum : TypeIpgEnum
+    enum : TypeIpgEnum ,
+    default : TypeIpgEnum.CRYPTO
   })
   typeIpg : TypeIpgEnum
 
   @ApiProperty()
   status : Boolean
 
-  @ApiProperty()
-  created_at : string
+  @ApiProperty({
+    default: (new Date()).toJSON()
+  })
+  created_at : Date
 
 
 }

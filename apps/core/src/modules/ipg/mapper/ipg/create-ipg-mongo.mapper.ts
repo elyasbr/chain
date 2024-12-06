@@ -11,9 +11,9 @@ export class CreateIpgMongoMapper extends  Ipg {
   constructor( createIpgDto : CreateIpgDto ) {
     super();
     this.slug = createIpgDto.slug
-    this.link = createIpgDto.link
+    this.linkBackend = createIpgDto.linkBackend
     this.frontLink = createIpgDto.frontLink
-    this.callBack=createIpgDto.callBack
+    this.callBackBackend=createIpgDto.callBackBackend
     this.frontCallBack =createIpgDto.frontCallBack
     this.typeIpg=createIpgDto.typeIpg
     this.status=createIpgDto.status

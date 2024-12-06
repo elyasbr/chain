@@ -3,6 +3,8 @@ import { TypeIpgEnum } from '@app/common/enums/type-ipg.enum';
 import { IsEmpty, IsEnum, IsNotEmpty, IsString, IsUrl } from 'class-validator';
 import { IpgError } from '@elyasbr/tools-chain/dist/src';
 import { PublicError } from '@elyasbr/public/dist/src';
+import { LinkBackendIpgDto } from '../../dtos/ipg/link-backend-ipg.dto';
+import { CallBackBackendIpgDto } from '../../dtos/ipg/call-back-backend-ipg.dto';
 
 export class PaginateIpgRMapper {
   @ApiProperty()
@@ -12,25 +14,28 @@ export class PaginateIpgRMapper {
   slug : string
 
   @ApiProperty()
-  link : string
+  linkBackend : LinkBackendIpgDto
 
   @ApiProperty()
   frontLink : string
 
   @ApiProperty()
-  callBack : string
+  callBackBackend : CallBackBackendIpgDto
 
   @ApiProperty()
   frontCallBack : string
 
   @ApiProperty({
-    enum : TypeIpgEnum
+    enum : TypeIpgEnum ,
+    default : TypeIpgEnum.CRYPTO
   })
   typeIpg : TypeIpgEnum
 
   @ApiProperty()
   status : Boolean
 
-  @ApiProperty()
-  created_at : string
+  @ApiProperty({
+    default: (new Date()).toJSON()
+  })
+  created_at : Date
 }

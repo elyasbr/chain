@@ -90,7 +90,7 @@ export class AssetService {
    }
   }
 
-  getAssetCoin() {
+  getGroupAssetCoin() {
     return Object.values(GroupAssetEnum)
   }
 }

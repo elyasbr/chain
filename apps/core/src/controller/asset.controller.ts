@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, UseInterceptors } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   ApiCreatedObjectResponse,
   ApiOkObjectResponse,
@@ -30,34 +30,40 @@ export class AssetController {
   constructor(private readonly assetService: AssetService) {}
 
   @Post("/")
+  @ApiOperation({summary : "Create Asset"})
   @ApiCreatedObjectResponse(PaginateAssetRMapper)
   createAsset(@Body() createAssetDto : CreateAssetDto) {
     return this.assetService.createAsset(createAssetDto)
   }
 
   @Put("/:assetId")
+  @ApiOperation({summary : "Update Asset"})
   @ApiOkObjectResponse(PaginateAssetRMapper)
   updateAsset( @Param('assetId')  assetId : string ,@Body() updateAssetDto : UpdateAssetDto) {
     return this.assetService.updateAsset(assetId ,updateAssetDto)
   }
   @Get("/asset-group")
+  @ApiOperation({summary : "Get Group Asset"})
   @ApiOkObjectResponse(GroupAssetEnum)
-  getAssetGroup(  ) {
-    return this.assetService.getAssetCoin( )
+  getGroupAsset(  ) {
+    return this.assetService.getGroupAssetCoin( )
   }
   @Get("/:assetId")
+  @ApiOperation({summary : "Get Asset"})
   @ApiOkObjectResponse(GetAssetRMapper)
   getAsset( @Param('assetId')  assetId : string ) {
     return this.assetService.getAsset(assetId )
   }
 
   @Delete("/:assetId")
+  @ApiOperation({summary : "Delete Asset"})
   @ApiOkObjectResponse(  DeleteResponseDto)
   deleteAsset( @Param('assetId')  assetId : string ) {
     return this.assetService.deleteAsset(assetId )
   }
 
   @Post("/pagination")
+  @ApiOperation({summary : "Pagination Asset"})
   @ApiOkObjectResponse(  PaginateAssetRMapper)
   getPagination(@Body() filterAssetDto : FilterAssetDto) {
     return this.assetService.getPagination(filterAssetDto)

@@ -17,26 +17,34 @@ export class Struct extends AbstractDocument {
   })
   slug : string
 
-  @Prop()
-  regex : string
-
-  @Prop({
-
-  })
-  httpServer : string
-
-  @Prop()
-  microserviceServer : string
-
-  @Prop()
-  description? : string
-
   @Prop({
     type : String ,
     index : true ,
     unique : true
   })
   symbol : string
+
+  @Prop()
+  regex : string
+
+  @Prop({
+    type : String ,
+    index : true ,
+    unique : true
+  })
+  httpServer : string
+
+  @Prop({
+    type : String ,
+    index : true ,
+    unique : true
+  })
+  microserviceServer : string
+
+  @Prop()
+  description? : string
+
+
 
 
   @Prop({

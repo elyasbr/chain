@@ -15,25 +15,38 @@ import { GetChainRMapper } from './rmapper/get-chain-r.mapper';
 import { FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
 import { SectionsErrorsEnum } from '@elyasbr/throw/dist/src/enums/sections-errors.enum';
 import { Err1000, ErrorType } from '@elyasbr/throw/dist/src/err';
+import { StructRepository } from '@app/common/dataBase/mongo/repositories/struct.repository';
+import { FilterArchOfChainDto } from './dtos/filter-arch-of-chain.dto';
+import { PaginateArchRMapper } from '../arch/rmapper/paginate-arch-r.mapper';
 
 @Injectable()
 export class ChainService {
   chainId = "chainId"
   constructor( public chainRepository : ChainRepository ,
+               public structRepository : StructRepository ,
                public archRepository : ArchRepository ,
                public throwService : ThrowService) {
   }
   async createChain(createChainDto : CreateChainDto) {
     try {
+      const  getOneStruct = await this.structRepository.findOne({_id : createChainDto.structId} ,[])
+      if (!getOneStruct) {
+        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
+      }
       const createChainMongoMapper = new CreateChainMongoMapper(createChainDto)
       const resultChain =  await this.chainRepository.create(createChainMongoMapper,[FieldsMongoEnum.UPDATED_AT])
       return await this.chainRepository.changeField(resultChain , [{key : "_id" , value : this.chainId}])
     } catch (e) {
-        this.throwService.handelError(e , SectionsErrorsEnum.CHAIN)
+      console.log(e);
+      this.throwService.handelError(e , SectionsErrorsEnum.CHAIN)
     }
   }
   async updateChain(idStruct : string , updateChainDto : UpdateChainDto) {
     try {
+      const  getOneStruct = await this.structRepository.findOne({_id : updateChainDto.structId})
+      if (!getOneStruct) {
+        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
+      }
       const updateChainMongoMapper = new UpdateChainMongoMapper(updateChainDto)
       const resultChain =  await this.chainRepository.findOneAndUpdate({_id : idStruct} , updateChainMongoMapper,[FieldsMongoEnum.UPDATED_AT])
       if (!resultChain) {
@@ -78,7 +91,7 @@ export class ChainService {
       this.throwService.handelError(e , SectionsErrorsEnum.CHAIN)
     }
   }
-  async getPagination(filterChainDto : FilterChainDto):Promise<PaginateDto<PaginateChainRMapper>> {
+  async getPagination( filterChainDto : FilterChainDto):Promise<PaginateDto<PaginateChainRMapper>> {
    try {
      const resultChain =  await this.chainRepository.find(filterChainDto.filter  ,
        [FieldsMongoEnum.UPDATED_AT],{  } ,{
@@ -92,5 +105,26 @@ export class ChainService {
    } catch (e) {
      this.throwService.handelError(e , SectionsErrorsEnum.CHAIN)
    }
+  }
+
+  async getPaginationArchFromChain(chainId : string ,filterArchOfChainDto : FilterArchOfChainDto):Promise<PaginateDto<PaginateArchRMapper>> {
+    try {
+      const getFilter = filterArchOfChainDto.filter
+      const filter = {
+        ...getFilter ,
+        chainId : chainId
+      }
+      const resultArch =  await this.archRepository.find(filter  ,
+        [FieldsMongoEnum.UPDATED_AT],{  } ,{
+          skip : (filterArchOfChainDto.page - 1) * filterArchOfChainDto.limit ,
+          limit : filterArchOfChainDto.limit ,
+          sort : [{"id" : 1}]
+        })
+      const count = this.archRepository.getCountDocuments()
+      const result = await this.archRepository.changeFieldArray(resultArch ,[{ key : "_id" ,value : "archId"}])
+      return new PaginateDto<PaginateArchRMapper>(result ,filterArchOfChainDto.page , filterArchOfChainDto.limit , Number(count) )
+    } catch (e) {
+      this.throwService.handelError(e , SectionsErrorsEnum.CHAIN)
+    }
   }
 }

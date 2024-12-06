@@ -19,9 +19,9 @@ export class UpdateIpgMongoMapper extends  Ipg{
   constructor( updateIpgDto : UpdateIpgDto ) {
     super();
     this.slug = updateIpgDto.slug
-    this.link = updateIpgDto.link
-    this.link=updateIpgDto.frontLink
-    this.callBack=updateIpgDto.callBack
+    this.linkBackend = updateIpgDto.linkBackend
+    this.frontLink=updateIpgDto.frontLink
+    this.callBackBackend=updateIpgDto.callBackBackend
     this.frontCallBack=updateIpgDto.frontCallBack
     this.typeIpg=updateIpgDto.typeIpg
     this.status=updateIpgDto.status

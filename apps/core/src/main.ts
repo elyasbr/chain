@@ -27,7 +27,7 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('Chain')
     .setVersion('1.0')
-    .addServer('http://localhost:7000/', 'Local environment')
+    .addServer('http://localhost:7001/', 'Local environment')
     .addTag('Your API Tag')
     .addBearerAuth(
       {
@@ -42,7 +42,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api-docs', app, document);
-  await app.listen( 7000);
-  console.info("http://localhost:7000/api-docs")
+  await app.listen( 7001);
+  console.info("http://localhost:7001/api-docs")
 }
 bootstrap();

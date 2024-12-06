@@ -7,22 +7,22 @@ export class ExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
     const status = exception.getStatus();
-    console.log(exception.getResponse()['message'])
     let errors
     switch (status) {
       case 400 :
-         errors = exception.getResponse()['message'].map((item)=> {
-          console.log(item)
-          return JSON.parse(item)
-        })
+        if (Array.isArray(exception.getResponse()['message'])) {
+          errors = exception.getResponse()['message'].map((item )=> {
+            if (item.split(".").length>1) return JSON.parse(item.split(".")[1]); else return JSON.parse(item)
+          })
+        } else {
+          errors =exception.getResponse()['message']
+        }
         break;
       case  403 :
-        console.log(exception.getResponse())
         const message = exception.getResponse()['message']
         errors = JSON.parse(message)
         break
     }
-
 
     response
       .status(status)

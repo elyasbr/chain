@@ -3,6 +3,47 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractDocument, FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
 import { TypeIpgEnum } from '@app/common/enums/type-ipg.enum';
 import {  Types } from 'mongoose';
+import { MethodsEnum } from '@elyasbr/public/dist/src';
+
+@Schema()
+class LinkBackend {
+  @Prop({
+    type : String ,
+    unique : true ,
+    index : true
+  })  url : string
+
+  @Prop()
+  body : string[]
+
+  @Prop({
+    type: String,
+    enum : MethodsEnum ,
+    default:  MethodsEnum.POST
+  })
+  method : MethodsEnum
+}
+
+@Schema()
+class CallBackBackend {
+  @Prop({
+    type : String ,
+    unique : true ,
+    index : true
+  })
+  url : string
+
+  @Prop()
+  body : string[]
+
+  @Prop({
+    type: String,
+    enum : MethodsEnum ,
+    default:  MethodsEnum.POST
+  })
+  method : MethodsEnum
+}
+
 
 
 @Schema({ versionKey: false ,
@@ -20,26 +61,18 @@ export class Ipg extends AbstractDocument {
   })
   slug : string
 
-  @Prop({
-    type : String ,
-    index : true ,
-    unique : true
-  })
-  link : string
+  @Prop()
+  linkBackend : LinkBackend
 
   @Prop({
     type : String ,
     index : true ,
     unique : true
   })
-  frontLink? : string
+  frontLink : string
 
-  @Prop({
-    type : String ,
-    index : true ,
-    unique : true
-  })
-  callBack : string
+  @Prop()
+  callBackBackend : CallBackBackend
 
   @Prop({
     type : String ,

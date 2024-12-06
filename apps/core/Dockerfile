@@ -25,6 +25,6 @@ RUN npm install --only=production
 
 COPY . .
 
-COPY --from=production /usr/src/app/dist ./dist
+COPY --from=development /usr/src/app/dist ./dist
 
 CMD ["node", "dist/apps/core/main"]

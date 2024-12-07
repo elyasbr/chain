@@ -4,13 +4,6 @@ import { TypeAsset } from '@app/common/enums/type-asset.enum';
 import { Asset } from '@app/common/dataBase/mongo/schemas/asset.schema';
 import { Crypto } from '@app/common/dataBase/mongo/schemas/crypto.schema';
 import { FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
-export class rewardToken {
-  @ApiProperty()
-  assetId:string
-
-  @ApiProperty()
-  amount :string
-}
 export class PaginateCryptoRMapper {
 
   @ApiProperty()
@@ -35,9 +28,6 @@ export class PaginateCryptoRMapper {
   smartContractId: string
 
   @ApiProperty()
-  rewardToken: rewardToken
-
-  @ApiProperty()
   rateWithdraw : number
 
   @ApiProperty()
@@ -59,7 +49,7 @@ export class PaginateCryptoRMapper {
 
   constructor(asset :Asset , crypto :Crypto ) {
     this.cryptoId =crypto['_id'].toString()
-    this.assetId = asset['id'].toString()
+    this.assetId = asset['_id'].toString()
     this.assetName  = asset.slug
     this.assetSymbol = asset.symbol
     this.smartContractId =crypto.smartContractId
@@ -69,7 +59,6 @@ export class PaginateCryptoRMapper {
     this.minInvest = crypto.minInvest
     this.rateWithdraw =crypto.minInvest
     this.rateWithdraw = crypto.rateWithdraw
-    this.rewardToken = crypto.rewardToken
     this.status = crypto.status
     this.created_at = crypto[FieldsMongoEnum.CREATED_AT]
   }

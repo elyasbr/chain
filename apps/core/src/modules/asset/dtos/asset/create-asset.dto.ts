@@ -49,7 +49,7 @@ export class CreateAssetDto {
 
   @ApiProperty()
   @Allow()
-  @IsString({
+  @IsBoolean({
     message : JSON.stringify(AssetError.IS_STABLE_COIN_FIELD_ASSET_IS_REQUIRED)
   })
   isStableCoin : Boolean

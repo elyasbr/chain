@@ -53,6 +53,14 @@ import { FilterCountryBankCryptoRlIpgDto } from '../modules/ipg/dtos/country/fil
 export class CountryController {
   constructor(private readonly countryService: CountryService) {}
 
+
+  @Post("/bank/crypto/paginate/:countryBankCryptoId")
+  @ApiOperation({summary : "Pagination  Ipg From CountryBankCrypto"})
+  @ApiCreatedObjectResponse(PaginateCountryBankCryptoRlIpgRMapper)
+  getPaginationIpgFromCountryBankCrypto(@Param('countryBankCryptoId') countryBankCryptoId:string,
+                                        @Body() filterCountryBankCryptoRlIpgDto : FilterCountryBankCryptoRlIpgDto) {
+    return this.countryService.getPaginationIpgFromCountryBankCrypto(countryBankCryptoId ,filterCountryBankCryptoRlIpgDto )
+  }
   @Post("/")
   @ApiOperation({summary : "Create Country"})
   @ApiCreatedObjectResponse(  PaginateCountryRMapper)
@@ -97,7 +105,6 @@ export class CountryController {
 
   @Delete("/bank/remove/:countryBankId")
   @ApiOperation({summary : "Delete Bank From Country"})
-
   @ApiOkObjectResponse(DeleteResponseDto)
   removeBankToCountry( @Param('countryBankId')  countryBankId : string) {
     return this.countryService.removeBankToCountry(countryBankId )
@@ -130,7 +137,7 @@ export class CountryController {
   @ApiOperation({summary : "Pagination Crypto From CountryBank"})
 
   @ApiCreatedObjectResponse(PaginateCountryBankRlCrypto)
-  getPaginationCryptoFromCountryBank(@Param('countryId') countryBankId:string,@Body() filterCountryBankRlCryptoDto : FilterCountryBankRlCryptoDto) {
+  getPaginationCryptoFromCountryBank(@Param('countryBankId') countryBankId:string,@Body() filterCountryBankRlCryptoDto : FilterCountryBankRlCryptoDto) {
     return this.countryService.getPaginationCryptoFromCountryBank(countryBankId ,filterCountryBankRlCryptoDto )
   }
 
@@ -149,11 +156,5 @@ export class CountryController {
     return this.countryService.removeIpgFromCountryBankCrypto(countryBankCryptoIpgId )
   }
 
-  @Post("/bank/crypto/paginate/:countryBankCryptoId")
-  @ApiOperation({summary : "Pagination  Ipg From CountryBankCrypto"})
-  @ApiCreatedObjectResponse(PaginateCountryBankCryptoRlIpgRMapper)
-  getPaginationIpgFromCountryBankCrypto(@Param('countryBankCryptoId') countryBankCryptoId:string,
-                                        @Body() filterCountryBankCryptoRlIpgDto : FilterCountryBankCryptoRlIpgDto) {
-    return this.countryService.getPaginationIpgFromCountryBankCrypto(countryBankCryptoId ,filterCountryBankCryptoRlIpgDto )
-  }
+
 }

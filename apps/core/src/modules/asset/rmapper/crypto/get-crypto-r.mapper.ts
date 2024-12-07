@@ -1,13 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { StatusAssetEnum } from '@app/common/enums/status-asset.enum';
 import { TypeAsset } from '@app/common/enums/type-asset.enum';
-export class rewardToken {
-  @ApiProperty()
-  cryptoId:string
 
-  @ApiProperty()
-  amount :string
-}
 export class GetCryptoRMapper {
 
   @ApiProperty()
@@ -27,9 +21,6 @@ export class GetCryptoRMapper {
 
   @ApiProperty()
   smartContractId: string
-
-  @ApiProperty()
-  rewardToken: rewardToken
 
   @ApiProperty()
   decimalBlockchain: number

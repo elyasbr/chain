@@ -17,6 +17,13 @@ export class Bank extends AbstractDocument {
   })
   slug : string
 
+  @Prop({
+    type : String ,
+    index : true ,
+    unique :true
+  })
+  symbol : string
+
   @Prop()
   iconFileId : string
 

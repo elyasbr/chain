@@ -11,6 +11,9 @@ export class PaginateBankRMapper {
   slug : string
 
   @ApiProperty()
+  symbol : string
+
+  @ApiProperty()
   iconFileId : string
 
   @ApiProperty()

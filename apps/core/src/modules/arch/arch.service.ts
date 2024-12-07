@@ -107,6 +107,9 @@ export class ArchService {
   async getPaginationCrypto(archId :  string ,filterCryptoDto:  FilterCryptoDto):Promise<PaginateDto<PaginateCryptoRMapper>> {
     try {
       const  {filter} =filterCryptoDto
+      console.log({ ...filter ,
+        archId : archId
+      })
       const resultCrypto =  await this.cryptoRepository.find({ ...filter ,
         archId : archId
       } ,[],{  } ,{
@@ -128,6 +131,7 @@ export class ArchService {
       const count = await this.cryptoRepository.getCountDocuments()
       return new PaginateDto<PaginateCryptoRMapper>(final ,filterCryptoDto.page , filterCryptoDto.limit , Number(count) )
     } catch (e) {
+
       this.throwService.handelError(e,SectionsErrorsEnum.ARCH)
     }
   }

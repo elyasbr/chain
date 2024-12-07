@@ -2,9 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { CoreModule } from './core.module';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ExceptionFilter } from './exception.filter';
 import { ConfigService } from '@nestjs/config';
 import * as process from 'process';
+import { ExceptionFilter } from '@elyasbr/public/dist/src';
 
 async function bootstrap() {
   const app = await NestFactory.create(CoreModule);

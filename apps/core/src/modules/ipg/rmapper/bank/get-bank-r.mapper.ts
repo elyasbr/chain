@@ -11,6 +11,9 @@ export class GetBankRMapper {
   slug : string
 
   @ApiProperty()
+  symbol : string
+
+  @ApiProperty()
   iconFileId : string
 
   @ApiProperty()

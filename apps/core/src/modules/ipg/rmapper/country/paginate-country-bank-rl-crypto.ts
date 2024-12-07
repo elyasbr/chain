@@ -19,6 +19,9 @@ export class rewardToken {
 }
 export class PaginateCountryBankRlCrypto {
   @ApiProperty()
+  countryBankCryptoId : string
+
+  @ApiProperty()
   countryBankId : string
 
   @ApiProperty()
@@ -60,13 +63,14 @@ export class PaginateCountryBankRlCrypto {
   created_at: Date
 
   constructor(arch :Arch , asset:Asset , crypto :Crypto, countryBankRlCrypto : CountryBankRlCrypto) {
+    this.countryBankCryptoId = countryBankRlCrypto['_id'].toString()
     this.countryBankId = countryBankRlCrypto.countryBankId
+    this.cryptoId = countryBankRlCrypto.cryptoId
     this.slugArch = arch.slug
     this.slugAsset =asset.slug
     this.isWithdraw = asset.isWithdraw
     this.isDeposit = crypto.isDeposit
     this.smartContractId = crypto.smartContractId
-    this.rewardToken  = crypto.rewardToken
     this.decimalBlockchain =crypto.decimalBlockchain
     this.minInvest = crypto.minInvest
     this.status = crypto.status

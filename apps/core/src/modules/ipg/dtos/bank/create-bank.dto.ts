@@ -11,6 +11,14 @@ export class CreateBankDto {
   })
   slug : string
 
+  @ApiProperty()
+  @Allow()
+  @IsString({
+    message : JSON.stringify(BankError.SYMBOL_FIELD_BANK_IS_REQUIRED)
+  })
+  symbol : string
+
+
   @ApiPropertyOptional()
   iconFileId : string
 

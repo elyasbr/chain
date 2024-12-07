@@ -23,24 +23,21 @@ export class CryptoService {
   }
   async createCrypto(createCryptoDto : CreateCryptoDto) :Promise<PaginateCryptoRMapper> {
     try {
-      const findOneArch = await this.archRepository.findOne({_id : createCryptoDto.archId})
-      if (!findOneArch) {
+      const getOneArch = await this.archRepository.findOne({_id : createCryptoDto.archId},[])
+      if (!getOneArch) {
         throw new Err1000(SectionsErrorsEnum.ARCH, ErrorType.VALIDATION_ERROR, JSON.stringify(ArchError.ARCH_NOT_FOUND))
       }
-      const findOneAsset = await this.assetRepository.findOne({_id : createCryptoDto.assetId})
-      if (!findOneAsset) {
+      const getOneAsset = await this.assetRepository.findOne({_id : createCryptoDto.assetId} ,[])
+      console.log(getOneAsset);
+      if (!getOneAsset) {
         throw new Err1000(SectionsErrorsEnum.ASSET, ErrorType.VALIDATION_ERROR, JSON.stringify(AssetError.ASSET_NOT_FOUND))
       }
-      if (createCryptoDto.rewardToken?.assetId){
-        const getOneAsset = await this.assetRepository.findOne({_id : createCryptoDto.rewardToken.assetId})
-        if (!getOneAsset)
-          throw new Err1000(SectionsErrorsEnum.ASSET, ErrorType.VALIDATION_ERROR, JSON.stringify(AssetError.ASSET_NOT_FOUND))
-      }
       const createCryptoMongoMapper = new CreateCryptoMongoMapper(createCryptoDto)
-      const resultCrypto = await this.cryptoRepository.create(createCryptoMongoMapper , [FieldsMongoEnum.UPDATED_AT])
-      const paginateCryptoRMapper = new PaginateCryptoRMapper(findOneAsset , resultCrypto)
+      const createCrypto = await this.cryptoRepository.create(createCryptoMongoMapper , [FieldsMongoEnum.UPDATED_AT])
+      const paginateCryptoRMapper = new PaginateCryptoRMapper(getOneAsset , createCrypto)
       return paginateCryptoRMapper
     } catch (e) {
+      console.log(e)
         this.throwService.handelError(e , SectionsErrorsEnum.CRYPTO)
     }
   }
@@ -53,11 +50,6 @@ export class CryptoService {
       const findOneAsset = await this.assetRepository.findOne({_id : updateCryptoDto.assetId})
       if (!findOneAsset) {
         throw new Err1000(SectionsErrorsEnum.ASSET, ErrorType.VALIDATION_ERROR, JSON.stringify(AssetError.ASSET_NOT_FOUND))
-      }
-      if (updateCryptoDto.rewardToken?.assetId){
-        const getOneAsset = await this.assetRepository.findOne({_id : updateCryptoDto.rewardToken.assetId})
-        if (!getOneAsset)
-          throw new Err1000(SectionsErrorsEnum.ASSET, ErrorType.VALIDATION_ERROR, JSON.stringify(AssetError.ASSET_NOT_FOUND))
       }
       const updateCryptoMongoMapper = new UpdateCryptoMongoMapper(updateCryptoDto)
       const resultCrypto =  await this.cryptoRepository.findOneAndUpdate({_id : cryptoId} , updateCryptoMongoMapper ,[FieldsMongoEnum.UPDATED_AT])

@@ -7,13 +7,7 @@ import { CreateCryptoDto } from '../../dtos/crypto/create-crypto.dto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { StatusAssetEnum } from '@app/common/enums/status-asset.enum';
 
-export class rewardToken {
-  @ApiProperty()
-  cryptoId:string
 
-  @ApiProperty()
-  amount :string
-}
 export class CreateCryptoMongoMapper extends  Crypto{
 
   constructor( createCryptoDto : CreateCryptoDto ) {
@@ -23,10 +17,6 @@ export class CreateCryptoMongoMapper extends  Crypto{
     this.isWithdraw=createCryptoDto.isWithdraw
     this.isDeposit=createCryptoDto.isDeposit
     this.smartContractId = createCryptoDto.smartContractId
-    this.rewardToken={
-      assetId : createCryptoDto.rewardToken?.assetId,
-      amount : createCryptoDto.rewardToken?.amount
-    }
     this.decimalBlockchain =createCryptoDto.decimalBlockchain
     this.minInvest=createCryptoDto.minInvest
     this.status= createCryptoDto.status

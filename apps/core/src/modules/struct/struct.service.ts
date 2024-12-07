@@ -30,7 +30,7 @@ export class StructService {
       const createStructMongoMapper = new CreateStructMongoMapper(createStructDto)
      const resultStruct =   await this.structRepository.create(createStructMongoMapper,[FieldsMongoEnum.UPDATED_AT])
      return  this.structRepository.changeField(resultStruct ,[{key:"_id" , value : this.structId}])
-      return
+
     } catch (e) {
 
         this.throwService.handelError(e ,SectionsErrorsEnum.STRUCT)

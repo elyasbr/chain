@@ -7,17 +7,23 @@ export class UpdateBankDto {
   @ApiProperty()
   @Allow()
   @IsString({
-    message : JSON.stringify(BankError.SLUG_FIELD_BANK_IS_REQUIRED)
+    message: JSON.stringify(BankError.SLUG_FIELD_BANK_IS_REQUIRED)
   })
-  slug : string
+  slug: string
 
+  @ApiProperty()
+  @Allow()
+  @IsString({
+    message: JSON.stringify(BankError.SYMBOL_FIELD_BANK_IS_REQUIRED)
+  })
+  symbol: string
   @ApiPropertyOptional()
-  iconFileId : string
+  iconFileId: string
 
   @ApiProperty()
   @Allow()
   @IsBoolean({
-    message : JSON.stringify(BankError.STATUS_FIELD_BANK_IS_REQUIRED)
+    message: JSON.stringify(BankError.STATUS_FIELD_BANK_IS_REQUIRED)
   })
-  status :Boolean
+  status: Boolean
 }

@@ -8,7 +8,13 @@ import { FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
 export class PaginateCountryBankRMapper {
 
   @ApiProperty()
+  countryBankId : string
+
+  @ApiProperty()
   countryId : string
+
+  @ApiProperty()
+  bankId : string
 
   @ApiProperty()
   slug : string
@@ -26,11 +32,12 @@ export class PaginateCountryBankRMapper {
 
   constructor(countryRlBank : CountryRlBank , bank :Bank) {
     this.countryId = countryRlBank.countryId
+    this.bankId = countryRlBank.bankId
+    this.countryBankId = countryRlBank['_id'].toString()
     this.slug = bank.slug
     this.iconFileId = bank.iconFileId
     this.status = bank.status
     this.created_at = countryRlBank[FieldsMongoEnum.CREATED_AT]
-
   }
 
 

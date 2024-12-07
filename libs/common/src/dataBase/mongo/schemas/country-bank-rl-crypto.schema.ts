@@ -22,4 +22,4 @@ export class CountryBankRlCrypto extends AbstractDocument {
 }
 
 export const CountryBankRlCryptoSchema = SchemaFactory.createForClass( CountryBankRlCrypto );
-CountryRlBankSchema.index({ countryBankId: 1, cryptoId: 1 }, { unique: true });
+CountryBankRlCryptoSchema.index({ countryBankId: 1, cryptoId: 1 }, { unique: true });

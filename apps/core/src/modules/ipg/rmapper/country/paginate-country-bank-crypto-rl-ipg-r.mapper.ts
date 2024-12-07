@@ -16,6 +16,9 @@ import { CallBackBackendIpgDto } from '../../dtos/ipg/call-back-backend-ipg.dto'
 
 export class PaginateCountryBankCryptoRlIpgRMapper {
   @ApiProperty()
+  countryBankCryptoIpgId : string
+
+  @ApiProperty()
   countryBankCryptoId : string
 
   @ApiProperty()
@@ -51,8 +54,9 @@ export class PaginateCountryBankCryptoRlIpgRMapper {
   created_at: Date
 
   constructor(ipg :Ipg , countryBankCryptoIpg : CountryBankCryptoRlIpg) {
+    this.countryBankCryptoIpgId=countryBankCryptoIpg['_id'].toString()
     this.countryBankCryptoId = countryBankCryptoIpg.countryBankCryptoId
-    this.ipgId = ipg['id'].toString()
+    this.ipgId = ipg['_id'].toString()
     this.slugIpg = ipg.slug
     this.typeIpg = ipg.typeIpg
     this.linkBackend = ipg.linkBackend

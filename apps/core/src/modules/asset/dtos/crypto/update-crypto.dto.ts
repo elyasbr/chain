@@ -5,15 +5,6 @@ import { Allow, IsBoolean, IsEnum, IsMongoId, IsNumber, IsObject, IsString } fro
 import { ArchError, AssetError, CryptoError } from '@elyasbr/tools-chain/dist/src';
 
 
-export class rewardToken {
-  @ApiProperty()
-  @Allow()
-  assetId :string
-
-  @ApiProperty()
-  @Allow()
-  amount : string
-}
 
 export class UpdateCryptoDto {
   @ApiProperty()
@@ -73,10 +64,6 @@ export class UpdateCryptoDto {
   @ApiPropertyOptional()
   @Allow()
   smartContractId? : string
-
-  @ApiProperty()
-  @Allow()
-  rewardToken? : rewardToken
 
   @ApiProperty({
     enum : StatusAssetEnum ,

@@ -22,6 +22,7 @@ export class CreateBankMongoMapper extends  Bank{
   constructor( createBankDto : CreateBankDto ) {
     super();
     this.slug = createBankDto.slug
+    this.symbol = createBankDto.symbol
     this.iconFileId = createBankDto.iconFileId
     this.status = createBankDto.status
 

@@ -18,25 +18,11 @@ import { ApiProperty } from '@nestjs/swagger';
 
 
 export class UpdateBankMongoMapper extends  Bank{
-  @ApiProperty()
-  id : string
 
-  @ApiProperty()
-  slug : string
-
-  @ApiProperty()
-  iconFileId : string
-
-  @ApiProperty()
-  status : Boolean
-
-  @ApiProperty({
-    default : (new Date()).toJSON()
-  })
-  created_at : Date
   constructor( updateBankDto : UpdateBankDto ) {
     super();
     this.slug = updateBankDto.slug
+    this.symbol=updateBankDto.symbol
     this.iconFileId = updateBankDto.iconFileId
     this.status = updateBankDto.status
 

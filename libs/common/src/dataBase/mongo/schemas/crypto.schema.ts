@@ -3,16 +3,6 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractDocument, FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
 import { StatusAssetEnum } from '@app/common/enums/status-asset.enum';
 
-@Schema()
-class rewardToken {
-  @Prop()
-  assetId :string
-
-  @Prop()
-  amount : string
-
-
-}
 @Schema({ versionKey: false ,
   timestamps : {
     createdAt: FieldsMongoEnum.CREATED_AT,
@@ -44,9 +34,6 @@ export class Crypto extends AbstractDocument {
 
   @Prop()
   minInvest : number
-
-  @Prop()
-  rewardToken? : rewardToken
 
   @Prop({
     enum : StatusAssetEnum ,

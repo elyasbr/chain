@@ -11,6 +11,9 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = configService.get<String>('MONGODB_URI');
   console.log(process.env.NODE_ENV)
+  console.log(process.env.MONGO_REPLICA1)
+  console.log(process.env.MONGO_REPLICA2)
+  console.log(process.env.MONGO_REPLICA3)
   console.log(process.env.MONGO_REPLICA4)
 
   app.useGlobalPipes(new ValidationPipe({

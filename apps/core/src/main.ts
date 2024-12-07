@@ -29,6 +29,7 @@ async function bootstrap() {
     .setTitle('Chain')
     .setVersion('1.0')
     .addServer('http://localhost:7001/', 'Local environment')
+    .addServer('https://chain.exmodules.org', 'Server Site')
     .addTag('Your API Tag')
     .addBearerAuth(
       {

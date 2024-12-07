@@ -89,8 +89,7 @@ Check out a few resources that may come in handy when working with NestJS:
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
 Please Create File .npmrc in root project with details
-@elyasbr:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=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
+_authToken=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
 
 ## License
 

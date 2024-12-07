@@ -32,10 +32,8 @@ import * as process from 'process';
       envFilePath: './dist/.env',
     }),
     // MongoModule.register({a : 2000}) ,
-    // MongooseModule.forRoot(`mongodb://root:kEfQqIL0v42B@${process.env.MONGO_REPLICA1},${process.env.MONGO_REPLICA2},` +
-    //   `${process.env.MONGO_REPLICA3}/dbnew?retryWrites=true&loadBalanced=false&replicaSet=rs0&readPreference=primary&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-1`) ,
-    MongooseModule.forRoot(`mongodb://root:kEfQqIL0v42B@192.168.70.185:27017,192.168.70.185:27018,` +
-      `192.168.70.185:27019/dbnew?retryWrites=true&loadBalanced=false&replicaSet=rs0&readPreference=primary&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-1`) ,
+    MongooseModule.forRoot(`mongodb://root:kEfQqIL0v42B@${process.env.MONGO_REPLICA1},${process.env.MONGO_REPLICA2},` +
+      `${process.env.MONGO_REPLICA3}/dbnew?retryWrites=true&loadBalanced=false&replicaSet=rs0&readPreference=primary&connectTimeoutMS=10000&authSource=admin&authMechanism=SCRAM-SHA-1`) ,
 
     ThrowModule ,
     IpgModule ,

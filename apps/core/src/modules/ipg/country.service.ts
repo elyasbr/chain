@@ -247,11 +247,11 @@ export class CountryService {
   }
   async addIpgToCountryBankCrypto(createCountryBankCryptoRlIpgDto : CreateCountryBankCryptoRlIpgDto) :Promise<PaginateCountryBankCryptoRlIpgRMapper> {
     try {
-      const  resultCountry = await this.countryBankRlCryptoRepository.findOne({_id : createCountryBankCryptoRlIpgDto.countryBankCryptoId})
+      const  resultCountry = await this.countryBankRlCryptoRepository.findOne({_id : createCountryBankCryptoRlIpgDto.countryBankCryptoId},[])
       if (!resultCountry) {
         throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_CRYPTO_NOT_FOUND))
       }
-      const  resultIpg = await this.ipgRepository.findOne({_id : createCountryBankCryptoRlIpgDto.ipgId})
+      const  resultIpg = await this.ipgRepository.findOne({_id : createCountryBankCryptoRlIpgDto.ipgId} ,[])
       if (!resultIpg) {
         throw new Err1000(SectionsErrorsEnum.IPG, ErrorType.VALIDATION_ERROR, JSON.stringify(IpgError.IPG_NOT_FOUND))
       }

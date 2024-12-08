@@ -66,6 +66,10 @@ export class CreateIpgDto {
   @IsObject({
     message: JSON.stringify(IpgError.CALL_BACK_BACKEND_IPG_IS_REQUIRED),
   })
+  @ValidateNested({ each: true ,
+    message: JSON.stringify(IpgError.CALL_BACK_BACKEND_IPG_IS_REQUIRED),
+  })
+  @Type(() => CallBackBackendIpgDto)
   callBackBackend: CallBackBackendIpgDto;
 
   @ApiProperty({

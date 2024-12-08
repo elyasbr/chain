@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { TypeIpgEnum } from '@app/common/enums/type-ipg.enum';
-import { Allow, IsArray, IsEmpty, IsEnum, IsNotEmpty, IsObject, IsString, IsUrl } from 'class-validator';
+import { Allow, IsArray, IsEmpty, IsEnum, IsNotEmpty, IsObject, IsString, IsUrl, ValidateIf } from 'class-validator';
 import { IpgError } from '@elyasbr/tools-chain/dist/src';
 import { MethodsEnum, PublicError } from '@elyasbr/public/dist/src';
 export class LinkBackendIpgDto {

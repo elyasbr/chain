@@ -28,7 +28,7 @@ export class IpgService {
      const resultIpg =   await this.ipgRepository.create(createIpgMongoMapper,[FieldsMongoEnum.UPDATED_AT])
      return await this.ipgRepository.changeField(resultIpg, [{ key: "_id", value: this.ipgId }])
     } catch (e  ) {
-      this.throwService.handelError(e,SectionsErrorsEnum.IPG)
+            this.throwService.handelError(e,SectionsErrorsEnum.IPG)
     }
   }
   async updateIpg(ipgId : string , updateIpgDto : UpdateIpgDto) {

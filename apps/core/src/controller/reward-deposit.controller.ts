@@ -16,6 +16,7 @@ import { PaginateCryptoRMapper } from '../modules/asset/rmapper/crypto/paginate-
 import { RewardDepositService } from '../modules/asset/reward-deposit.service';
 import { CreateRewardDepositDto } from '../modules/asset/dtos/reward-deposit/create-reward-deposit.dto';
 import { FilterRewardDepositDto } from '../modules/asset/dtos/reward-deposit/filter-reward-deposit.dto';
+import { PaginateRewardDepositRMapper } from '../modules/asset/rmapper/reward-deposit/paginate-reward-deposit-r.mapper';
 
 @Controller({
   path : "blockchain/reward-deposit" ,
@@ -33,14 +34,14 @@ export class RewardDepositController {
     return this.rewardDepositService.createRewardDeposit(createRewardDepositDto)
   }
   @Post("/paginate/:cryptoId")
-  @ApiOkObjectResponse(DeleteResponseDto)
-  deleteAsset( @Param('cryptoId')  cryptoId : string  , @Body() filterRewardDepositDto : FilterRewardDepositDto) {
+  @ApiOkObjectResponse(PaginateRewardDepositRMapper)
+  getPaginationRewardDeposit( @Param('cryptoId')  cryptoId : string  , @Body() filterRewardDepositDto : FilterRewardDepositDto) {
     return this.rewardDepositService.getPaginationRewardDeposit(cryptoId , filterRewardDepositDto )
   }
   @Delete("/:rewardDepositId")
   @ApiOkObjectResponse(DeleteResponseDto)
-  removeRewardDeposit( @Param('rewardDepositId')  cryptoId : string ) {
-    return this.rewardDepositService.deleteRewardDeposit(cryptoId )
+  removeRewardDeposit( @Param('rewardDepositId')  rewardDepositId : string ) {
+    return this.rewardDepositService.deleteRewardDeposit(rewardDepositId )
   }
 
 

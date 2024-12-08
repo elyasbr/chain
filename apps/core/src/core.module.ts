@@ -28,7 +28,7 @@ import * as process from 'process';
 
     ConfigModule.forRoot({
       isGlobal: true,
-
+      
       envFilePath: './dist/.env',
     }),
     // MongoModule.register({a : 2000}) ,

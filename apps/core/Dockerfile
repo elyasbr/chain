@@ -11,20 +11,24 @@ COPY . .
 
 RUN npm run start:dev
 
-FROM node:alpine as production
+FROM node:20-alpine as builder
+ARG APP_NAME
+WORKDIR /app
+COPY package*.json .
+COPY .npmrc .
+RUN npm install
+COPY . .
+RUN npm run build core
 
+
+FROM node:20-alpine as production
+WORKDIR /app
+ARG APP_NAME
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-COPY ../../.npmrc   ./
-
-RUN npm install --only=production
-
-COPY . .
-
-COPY --from=development /usr/src/app/dist ./dist
-
-CMD ["node", "dist/apps/core/main"]
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json .
+COPY  .env.prod ./dist/apps/core/.env.prod
+ENV APP_MAIN_FILE=dist/apps/core/src/main.js
+CMD node ${APP_MAIN_FILE}

@@ -6,7 +6,6 @@ services:
       context: .
       dockerfile: ./apps/core/Dockerfile
       target: production
-    command: npm run start core
     env_file:
       - ./apps/core/.production.env
     volumes:

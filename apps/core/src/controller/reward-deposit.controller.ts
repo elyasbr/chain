@@ -21,7 +21,7 @@ import { FilterRewardDepositDto } from '../modules/asset/dtos/reward-deposit/fil
   path : "blockchain/reward-deposit" ,
   version : "1"
 })
-@ApiTags("Crypto")
+@ApiTags("Reward Asset")
 @ApiValidationRequest()
 @ApiForbiddenRequest()
 export class RewardDepositController {

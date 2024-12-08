@@ -5,9 +5,9 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": false,
-    "tsConfigPath": "apps/core/tsconfig.app.json" ,
+    "tsConfigPath": "apps/core/tsconfig.app.json" , 
     "assets": [
-      "./.env"
+      { "include": "../../core/src/.env", "outDir": "dist/apps/core", "watchAssets": true }
     ]
   },
   "monorepo": true,
@@ -20,7 +20,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/core/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/core/tsconfig.app.json"
+        "tsConfigPath": "apps/core/tsconfig.app.json" 
       }
     },
     "common": {

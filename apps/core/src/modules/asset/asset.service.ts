@@ -82,7 +82,7 @@ export class AssetService {
        limit : filterAssetDto.limit ,
        sort : [{"id" : 1}]
      })
-     const count = this.assetRepository.getCountDocuments()
+     const count = await  this.assetRepository.getCountDocuments()
      const result = await this.assetRepository.changeFieldArray(resultAsset , [{key : "_id" , value : this.assetId}])
      return new PaginateDto<PaginateAssetRMapper>(result ,filterAssetDto.page , filterAssetDto.limit , Number(count) )
    } catch (e) {

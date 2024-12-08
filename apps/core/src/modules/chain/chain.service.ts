@@ -99,7 +99,7 @@ export class ChainService {
        limit : filterChainDto.limit ,
        sort : [{"id" : 1}]
      })
-     const count = this.chainRepository.getCountDocuments()
+     const count = await this.chainRepository.getCountDocuments()
      const result = await this.chainRepository.changeFieldArray(resultChain ,[{ key : "_id" ,value :this.chainId}])
      return new PaginateDto<PaginateChainRMapper>(result ,filterChainDto.page , filterChainDto.limit , Number(count) )
    } catch (e) {
@@ -120,7 +120,7 @@ export class ChainService {
           limit : filterArchOfChainDto.limit ,
           sort : [{"id" : 1}]
         })
-      const count = this.archRepository.getCountDocuments()
+      const count = await this.archRepository.getCountDocuments()
       const result = await this.archRepository.changeFieldArray(resultArch ,[{ key : "_id" ,value : "archId"}])
       return new PaginateDto<PaginateArchRMapper>(result ,filterArchOfChainDto.page , filterArchOfChainDto.limit , Number(count) )
     } catch (e) {

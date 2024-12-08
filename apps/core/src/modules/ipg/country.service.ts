@@ -140,7 +140,7 @@ export class CountryService {
         })
       const mapBanks:string[] =findCountryRlBank.map((item)=>item.bankId)
       const findBanks = await this.bankRepository.find({ _id : { $in : mapBanks}} ,[],{} , {})
-      const count =this.countryRlBankRepository.getCountDocuments()
+      const count =await this.countryRlBankRepository.getCountDocuments()
       const banks : PaginateCountryBankRMapper[] =[]
       findBanks.forEach((item , index)=>{
         const row =findCountryRlBank.find((itemRl)=>itemRl.bankId==item._id.toString())

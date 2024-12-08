@@ -79,7 +79,7 @@ export class BankService {
        limit : filterBankDto.limit ,
        sort : [{"id" : 1}]
      })
-     const count =this.bankRepository.getCountDocuments()
+     const count = await  this.bankRepository.getCountDocuments()
      const result = await this.bankRepository.changeFieldArray(resultBank ,[{key :"_id" , value : this.bankId}])
      return new PaginateDto<PaginateBankRMapper>(result ,filterBankDto.page , filterBankDto.limit , Number(count) )
    } catch (e) {

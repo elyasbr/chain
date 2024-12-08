@@ -21,10 +21,10 @@ COPY . .
 RUN npm run build core
 
 
-FROM node:20-alpine as production
+FROM node:alpine As production
 WORKDIR /app
 ARG APP_NAME
-ARG NODE_ENV=production
+ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules

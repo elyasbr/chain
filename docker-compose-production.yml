@@ -1,6 +1,6 @@
 services:
   core:
-    container_name: chainCore
+    container_name: chainCore-prod
     restart:  always
     build:
       context: .

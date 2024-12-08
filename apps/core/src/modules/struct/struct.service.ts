@@ -94,7 +94,8 @@ export class StructService {
        limit : filterStructDto.limit ,
        sort : [{"id" : 1}]
      })
-     const count = this.structRepository.getCountDocuments()
+     const count = await this.structRepository.getCountDocuments()
+     console.log(count)
      const result = await this.structRepository.changeFieldArray(resultStruct ,[{ key : "_id" ,value :this.structId}])
 
      return new PaginateDto<PaginateStructRMapper>(result ,filterStructDto.page , filterStructDto.limit , Number(count) )
@@ -115,7 +116,7 @@ export class StructService {
         limit : filterChainsOfStructDto.limit ,
         sort : [{"id" : 1}]
       })
-      const count = this.structRepository.getCountDocuments()
+      const count = await this.structRepository.getCountDocuments()
       const result = await this.chainRepository.changeFieldArray(resultChain ,[{ key : "_id" ,value : "chainId"}])
 
       return new PaginateDto<PaginateChainRMapper>(result ,filterChainsOfStructDto.page , filterChainsOfStructDto.limit , Number(count) )

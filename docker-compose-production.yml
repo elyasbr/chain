@@ -1,12 +1,11 @@
 services:
   core:
-    container_name: chainCore
+    container_name: chainCore-prod
     restart:  always
     build:
       context: .
       dockerfile: ./apps/core/Dockerfile
-      target: production
-    command: npm run start core
+      target: prod
     env_file:
       - ./apps/core/.production.env
     volumes:

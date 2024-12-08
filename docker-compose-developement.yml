@@ -1,12 +1,11 @@
 services:
   core:
-    container_name: chainCore
-    restart: always
+    container_name: chainCore-dev
+    restart:  always
     build:
       context: .
       dockerfile: ./apps/core/Dockerfile
       target: development
-    command: npm run start:dev core
     env_file:
       - ./apps/core/.env
     volumes:

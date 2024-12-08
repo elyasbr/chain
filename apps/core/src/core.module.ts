@@ -29,7 +29,6 @@ import { RewardDepositController } from './controller/reward-deposit.controller'
 
     ConfigModule.forRoot({
       isGlobal: true,
-
       envFilePath: './dist/.env',
     }),
     // MongoModule.register({a : 2000}) ,

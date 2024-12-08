@@ -10,7 +10,6 @@ import { StatusAssetEnum } from '@app/common/enums/status-asset.enum';
   } ,  collection : "reward-deposit"})
 export class RewardDeposit extends AbstractDocument {
 
-
   @Prop({
     required : true
   })
@@ -24,7 +23,7 @@ export class RewardDeposit extends AbstractDocument {
   @Prop({
     required : true
   })
-  amount : string
+  amount : number
 
   @Prop({
     required : true

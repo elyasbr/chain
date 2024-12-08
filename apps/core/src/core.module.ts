@@ -22,6 +22,7 @@ import { CryptoController } from './controller/crypto.controller';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from '@elyasbr/public/dist/src';
 import * as process from 'process';
+import { RewardDepositController } from './controller/reward-deposit.controller';
 
 @Module({
   imports: [
@@ -44,7 +45,8 @@ import * as process from 'process';
   ],
   controllers: [
     IpgController , StructController , ChainController , ArchController , AssetController ,
-    BankController , CountryController , CryptoController
+    BankController , CountryController , CryptoController ,
+    RewardDepositController
   ],
   providers: [
     {

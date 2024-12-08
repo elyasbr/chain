@@ -24,7 +24,7 @@
     "@elyasbr/dynamic-mongo": "^1.0.44",
     "@elyasbr/public": "^1.0.28",
     "@elyasbr/throw": "^1.0.48",
-    "@elyasbr/tools-chain": "^1.0.65",
+    "@elyasbr/tools-chain": "^1.0.70",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.3.0",
     "@nestjs/core": "^10.0.0",

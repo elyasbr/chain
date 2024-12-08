@@ -8,17 +8,21 @@ import { Crypto, CryptoSchema } from '@app/common/dataBase/mongo/schemas/crypto.
 import { AssetRepository } from '@app/common/dataBase/mongo/repositories/asset.repository';
 import { CryptoRepository } from '@app/common/dataBase/mongo/repositories/crypto.repository';
 import { ArchRepository } from '@app/common/dataBase/mongo/repositories/arch.repository';
+import { RewardDepositService } from './reward-deposit.service';
+import { RewardDepositRepository } from '@app/common/dataBase/mongo/repositories/reward-deposit.repository';
+import { Bank, BankSchema } from '@app/common/dataBase/mongo/schemas/bank.schema';
 
 @Module({
   imports :[
     MongooseModule.forFeature([
       { name: Asset.name, schema: AssetSchema  } ,
       { name: Crypto.name, schema: CryptoSchema  } ,
-      { name: Arch.name, schema: ArchSchema  }
+      { name: Arch.name, schema: ArchSchema  } ,
+      { name: Bank.name, schema: BankSchema  }
     ])
   ] ,
-  providers :[ AssetService , CryptoService, AssetRepository , CryptoRepository ,ArchRepository ],
-  exports :[ AssetService , CryptoService ]
+  providers :[ AssetService , CryptoService , RewardDepositService, AssetRepository , CryptoRepository ,ArchRepository , RewardDepositRepository ],
+  exports :[ AssetService , CryptoService  ,RewardDepositService]
 
 
 })

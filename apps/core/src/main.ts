@@ -15,9 +15,9 @@ async function bootstrap() {
   console.log(process.env.MONGO_REPLICA2)
   console.log(process.env.MONGO_REPLICA3)
   console.log(process.env.MONGO_REPLICA4)
-  app.enableCors({
-
-  });
+  // app.enableCors({
+  //
+  // });
 
   app.useGlobalPipes(new ValidationPipe({
     whitelist : true

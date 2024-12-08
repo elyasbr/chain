@@ -9,7 +9,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run start:dev
+RUN npm run build
 
 FROM node:20-alpine as builder
 ARG APP_NAME
@@ -29,6 +29,6 @@ ENV NODE_ENV=${NODE_ENV}
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json .
-COPY  .env.prod ./dist/apps/core/.env.prod
+COPY  apps/core/.production.env ./apps/core/.env
 ENV APP_MAIN_FILE=dist/apps/core/src/main.js
 CMD node ${APP_MAIN_FILE}

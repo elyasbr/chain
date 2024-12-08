@@ -6,8 +6,8 @@ services:
       context: .
       dockerfile: ./apps/core/Dockerfile
       target: production
-    env_file:
-      - ./apps/core/.production.env
+    # env_file:
+    #   - ./apps/core/.production.env
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules

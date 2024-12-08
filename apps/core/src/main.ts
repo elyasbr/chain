@@ -28,8 +28,8 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('Chain')
     .setVersion('1.0')
+    .addServer('https://chain.exmodules.org/', 'Server Site')
     .addServer('http://localhost:7001/', 'Local environment')
-    .addServer('https://chain.exmodules.org', 'Server Site')
     .addTag('Your API Tag')
     .addBearerAuth(
       {

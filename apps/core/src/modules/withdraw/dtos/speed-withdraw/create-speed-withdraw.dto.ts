@@ -6,7 +6,6 @@ import { SpeedWithdraw } from '@app/common/dataBase/mongo/schemas/speed-withdraw
 
 export class CreateSpeedWithdrawDto {
   @ApiProperty()
-  @Allow()
   @IsString({
     message : JSON.stringify(SpeedWithdrawError.SLUG_FIELD_SPEED_WITHDRAW_IS_REQUIRED)
   })
@@ -16,9 +15,8 @@ export class CreateSpeedWithdrawDto {
   slug : string
 
   @ApiProperty()
-  @Allow()
   @IsNumber({} ,{
-
+    message : JSON.stringify(SpeedWithdrawError.RATE_WITHDRAW_FIELD_SPEED_WITHDRAW_IS_REQUIRED)
   })
   rateWithdraw : number
 
@@ -27,7 +25,6 @@ export class CreateSpeedWithdrawDto {
   description : string
 
   @ApiProperty()
-  @Allow()
   @IsBoolean({
     message : JSON.stringify(SpeedWithdrawError.STATUS_FIELD_SPEED_WITHDRAW_IS_REQUIRED)
   })

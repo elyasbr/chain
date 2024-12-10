@@ -14,11 +14,7 @@ import { FilterChain, FilterChainDto } from '../modules/chain/dtos/filter-chain.
 import { GetChainRMapper } from '../modules/chain/rmapper/get-chain-r.mapper';
 import { ApiValidationRequest } from '@elyasbr/public/dist/src/decorators/api-validation-request.decorator';
 import { ApiForbiddenRequest } from '@elyasbr/public/dist/src/decorators/api-forbidden-request.decorator';
-import { CreateChainMongoMapper } from '../modules/chain/mapper/create-chain-mongo.mapper';
-import { UpdateChainMongoMapper } from '../modules/chain/mapper/update-chain-mongo.mapper';
 import { PaginateChainRMapper } from '../modules/chain/rmapper/paginate-chain-r.mapper';
-import { PaginateStructRMapper } from '../modules/struct/rmapper/paginate-struct-r.mapper';
-import { FilterChainsOfStructDto } from '../modules/struct/dtos/filter-chains-of-struct.dto';
 import { FilterArchOfChainDto } from '../modules/chain/dtos/filter-arch-of-chain.dto';
 import { PaginateArchRMapper } from '../modules/arch/rmapper/paginate-arch-r.mapper';
 

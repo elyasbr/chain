@@ -33,11 +33,11 @@ export class RewardDepositService {
     try {
       const getOneCrypto = await this.cryptoRepository.findOne({_id : createRewardDepositDto.cryptoId},[])
       if (!getOneCrypto) {
-        throw new Err1000(SectionsErrorsEnum.ARCH, ErrorType.VALIDATION_ERROR, JSON.stringify(CryptoError.CRYPTO_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.ARCH, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CryptoError.CRYPTO_NOT_FOUND))
       }
       const getOneAsset = await this.assetRepository.findOne({_id : createRewardDepositDto.assetId} ,[])
       if (!getOneAsset) {
-        throw new Err1000(SectionsErrorsEnum.ASSET, ErrorType.VALIDATION_ERROR, JSON.stringify(AssetError.ASSET_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.ASSET, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(AssetError.ASSET_NOT_FOUND))
       }
       const createRewardDepositMongoMapper = new CreateRewardDepositMongoMapper(createRewardDepositDto)
       const createRewardDeposit = await this.rewardDepositRepository.create(createRewardDepositMongoMapper , [FieldsMongoEnum.UPDATED_AT])
@@ -53,7 +53,7 @@ export class RewardDepositService {
     try {
       const deleteResult =  await this.rewardDepositRepository.deleteOne({ _id : rewardDepositId })
       if (deleteResult.deletedCount==0) {
-        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_ERROR, JSON.stringify(RewardDepositError.REWARD_DEPOSIT_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(RewardDepositError.REWARD_DEPOSIT_NOT_FOUND))
       }
       return {
         status : true

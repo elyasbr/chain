@@ -7,7 +7,7 @@ import { Chain } from '@app/common/dataBase/mongo/schemas/chain.schema';
 import { CreateChainDto } from '../../chain/dtos/create-chain.dto';
 import { UpdateChainDto } from '../../chain/dtos/update-chain.dto';
 import { Arch } from '@app/common/dataBase/mongo/schemas/arch.schema';
-import { UpdateArchDto } from '../arch/update-arch.dto';
+import { UpdateArchDto } from '../dtos/update-arch.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
 

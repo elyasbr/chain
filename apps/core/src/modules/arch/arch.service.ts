@@ -4,15 +4,15 @@ import { ArchError, ChainError } from '@elyasbr/tools-chain/dist/src';
 import { ArchRepository } from '@app/common/dataBase/mongo/repositories/arch.repository';
 import { CryptoRepository } from '@app/common/dataBase/mongo/repositories/crypto.repository';
 import { AssetRepository } from '@app/common/dataBase/mongo/repositories/asset.repository';
-import { CreateArchDto } from './arch/create-arch.dto';
+import { CreateArchDto } from './dtos/create-arch.dto';
 import { CreateArchMongoMapper } from './mapper/create-arch-mongo.mapper';
-import { UpdateArchDto } from './arch/update-arch.dto';
+import { UpdateArchDto } from './dtos/update-arch.dto';
 import { UpdateArchMongoMapper } from './mapper/update-arch-mongo.mapper';
-import { FilterArchDto } from './arch/filter-arch.dto';
+import { FilterArchDto } from './dtos/filter-arch.dto';
 import { FilterCryptoDto } from '../asset/dtos/crypto/filter-crypto.dto';
 import { PaginateDto } from '@elyasbr/public/dist/src/dtos/paginate.dto';
 import { ChainRepository } from '@app/common/dataBase/mongo/repositories/chain.repository';
-import { DeleteResponseDto } from '@elyasbr/public/dist/src';
+import { DeleteResponseDto, JsonMethodUtl } from '@elyasbr/public/dist/src';
 import { PaginateArchRMapper } from './rmapper/paginate-arch-r.mapper';
 import { FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
 import { PaginateCryptoRMapper } from '../asset/rmapper/crypto/paginate-crypto-r.mapper';
@@ -30,13 +30,13 @@ export class ArchService {
   }
   async createArch(createArchDto : CreateArchDto) :Promise<CreateArchMongoMapper> {
     try {
-      const resultChain = await this.chainRepository.findOne({_id : createArchDto.chainId},[])
-      if (!resultChain) {
-        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_ERROR, JSON.stringify(ChainError.CHAIN_NOT_FOUND))
+      const getOneChain = await this.chainRepository.findOne({_id : createArchDto.chainId},[])
+      if (!getOneChain) {
+        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(ChainError.CHAIN_NOT_FOUND))
       }
       const createArchMongoMapper = new CreateArchMongoMapper(createArchDto)
-      const resultArch = await this.archRepository.create(createArchMongoMapper ,[FieldsMongoEnum.UPDATED_AT])
-      return await this.archRepository.changeField(resultArch , [{key : "_id" , value : this.archId}])
+      const createArch = await this.archRepository.create(createArchMongoMapper ,[FieldsMongoEnum.UPDATED_AT])
+      return await JsonMethodUtl.changeField(createArch , [{key : "_id" , value : this.archId}])
     } catch (e) {
 
         this.throwService.handelError(e,SectionsErrorsEnum.ARCH)
@@ -46,27 +46,27 @@ export class ArchService {
   }
   async updateArch(archId : string , updateArchDto : UpdateArchDto) {
     try {
-      const resultChain = await this.chainRepository.findOne({_id : updateArchDto.chainId})
-      if (!resultChain) {
-        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_ERROR, JSON.stringify(ChainError.CHAIN_NOT_FOUND))
+      const getOneChain = await this.chainRepository.findOne({_id : updateArchDto.chainId})
+      if (!getOneChain) {
+        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(ChainError.CHAIN_NOT_FOUND))
       }
       const updateArchMongoMapper = new UpdateArchMongoMapper(updateArchDto)
-      const resultArch =  await this.archRepository.findOneAndUpdate({_id : archId} , updateArchMongoMapper,[FieldsMongoEnum.UPDATED_AT])
-      if (!resultArch) {
-        throw new Err1000(SectionsErrorsEnum.ARCH, ErrorType.VALIDATION_ERROR, JSON.stringify(ArchError.ARCH_NOT_FOUND))
+      const getOneArch =  await this.archRepository.findOneAndUpdate({_id : archId} , updateArchMongoMapper,[FieldsMongoEnum.UPDATED_AT])
+      if (!getOneArch) {
+        throw new Err1000(SectionsErrorsEnum.ARCH, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(ArchError.ARCH_NOT_FOUND))
       }
-      return await this.archRepository.changeField(resultArch , [{key : "_id" , value : this.archId}])
+      return JsonMethodUtl.changeField(getOneArch , [{key : "_id" , value : this.archId}])
     } catch (e) {
       this.throwService.handelError(e,SectionsErrorsEnum.ARCH)
     }
   }
   async getArch(archId : string ) {
     try {
-      const resultChain =  await this.archRepository.findOne({_id : archId} ,[FieldsMongoEnum.UPDATED_AT] )
-      if (!resultChain) {
-        throw new Err1000(SectionsErrorsEnum.ARCH, ErrorType.VALIDATION_ERROR, JSON.stringify(ArchError.ARCH_NOT_FOUND))
+      const getOneArch =  await this.archRepository.findOne({_id : archId} ,[FieldsMongoEnum.UPDATED_AT] )
+      if (!getOneArch) {
+        throw new Err1000(SectionsErrorsEnum.ARCH, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(ArchError.ARCH_NOT_FOUND))
       }
-      return await this.chainRepository.changeField(resultChain , [{key : "_id" , value : this.archId}])
+      return await JsonMethodUtl.changeField(getOneArch , [{key : "_id" , value : this.archId}])
 
     } catch (e) {
       this.throwService.handelError(e,SectionsErrorsEnum.ARCH)
@@ -76,9 +76,9 @@ export class ArchService {
   }
   async deleteArch(archId : string):Promise<DeleteResponseDto> {
     try {
-      const deleteResult =  await this.archRepository.deleteOne({ _id :archId })
-      if (deleteResult.deletedCount==0) {
-        throw new Err1000(SectionsErrorsEnum.ARCH, ErrorType.VALIDATION_ERROR, JSON.stringify(ArchError.ARCH_NOT_FOUND))
+      const deleteArch =  await this.archRepository.deleteOne({ _id :archId })
+      if (deleteArch.deletedCount==0) {
+        throw new Err1000(SectionsErrorsEnum.ARCH, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(ArchError.ARCH_NOT_FOUND))
       }
       return  {
         status : true
@@ -90,7 +90,7 @@ export class ArchService {
   }
   async getPagination(filterArchDto : FilterArchDto):Promise<PaginateDto<PaginateArchRMapper>> {
    try {
-     const resultArch =  await this.archRepository.find(filterArchDto.filter  ,
+     const getArrayArch =  await this.archRepository.find(filterArchDto.filter  ,
        [FieldsMongoEnum.UPDATED_AT],{  } ,{
        skip : (filterArchDto.page - 1) * filterArchDto.limit ,
        limit : filterArchDto.limit ,
@@ -98,7 +98,7 @@ export class ArchService {
 
      })
      const count = await this.archRepository.getCountDocuments()
-     const result = await this.archRepository.changeFieldArray(resultArch ,[{ key : "_id" ,value :this.archId}])
+     const result = JsonMethodUtl.changeFieldArray(getArrayArch ,[{ key : "_id" ,value :this.archId}])
      return new PaginateDto<PaginateArchRMapper>(result ,filterArchDto.page , filterArchDto.limit , Number(count) )
    } catch (e) {
      this.throwService.handelError(e,SectionsErrorsEnum.ARCH)
@@ -116,13 +116,12 @@ export class ArchService {
         skip : (filterCryptoDto.page - 1) * filterCryptoDto.limit ,
         limit : filterCryptoDto.limit ,
         sort : [{"id" : 1}]
-
       })
       const assets = resultCrypto.map((item)=> item.assetId)
-      const resultAsset = await this.assetRepository.find({ _id : { $in : assets}} ,[],{} , {})
+      const getArrayAsset = await this.assetRepository.find({ _id : { $in : assets}} ,[],{} , {})
       const final :PaginateCryptoRMapper[] =[]
       resultCrypto.forEach(item =>{
-        const asset = resultAsset.find((asset)=> asset._id.toString()== item.assetId)
+        const asset = getArrayAsset.find((asset)=> asset._id.toString()== item.assetId)
         if (asset) {
           const paginateCryptoRMapper = new PaginateCryptoRMapper(asset , item)
           final.push(paginateCryptoRMapper)

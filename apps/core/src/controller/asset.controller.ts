@@ -6,15 +6,12 @@ import {
   DeleteResponseDto,
   ResponseInterceptor,
 } from '@elyasbr/public/dist/src';
-
 import { CreateAssetDto } from '../modules/asset/dtos/asset/create-asset.dto';
 import { UpdateAssetDto } from '../modules/asset/dtos/asset/update-asset.dto';
 import { FilterAssetDto } from '../modules/asset/dtos/asset/filter-asset.dto';
 import { AssetService } from '../modules/asset/asset.service';
 import { ApiValidationRequest } from '@elyasbr/public/dist/src/decorators/api-validation-request.decorator';
 import { ApiForbiddenRequest } from '@elyasbr/public/dist/src/decorators/api-forbidden-request.decorator';
-import { CreateAssetMongoMapper } from '../modules/asset/mapper/asset/create-asset-mongo.mapper';
-import { UpdateAssetMongoMapper } from '../modules/asset/mapper/asset/update-asset-mongo.mapper';
 import { PaginateAssetRMapper } from '../modules/asset/rmapper/asset/paginate-asset-r.mapper';
 import { GetAssetRMapper } from '../modules/asset/rmapper/asset/get-asset-r.mapper';
 import { GroupAssetEnum } from '@app/common/enums/group-asset.enum';

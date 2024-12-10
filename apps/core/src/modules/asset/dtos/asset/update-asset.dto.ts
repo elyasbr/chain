@@ -24,6 +24,14 @@ export class UpdateAssetDto {
 
   @ApiProperty()
   @Allow()
+  @IsBoolean({
+    message : JSON.stringify(AssetError.IS_SYSTEM_FIELD_ASSET_IS_REQUIRED)
+  })
+  isSystem : Boolean
+
+
+  @ApiProperty()
+  @Allow()
   @IsNumber({} ,{
     message : JSON.stringify(AssetError.RATE_TRADE_FIELD_ASSET_IS_REQUIRED)
   })
@@ -38,7 +46,7 @@ export class UpdateAssetDto {
 
   @ApiProperty()
   @Allow()
-  @IsString({
+  @IsBoolean({
     message : JSON.stringify(AssetError.IS_STABLE_COIN_FIELD_ASSET_IS_REQUIRED)
   })
   isStableCoin : Boolean
@@ -123,6 +131,7 @@ export class UpdateAssetDto {
 
   @ApiPropertyOptional({
     example:"https://google.com?q=iconfile.svg"
+
   })
   @Allow()
   // @IsUrl({require_host : true } ,{

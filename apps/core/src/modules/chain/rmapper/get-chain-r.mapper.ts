@@ -14,6 +14,9 @@ export class GetChainRMapper  {
   structId : string
 
   @ApiProperty()
+  scannerAddress : string
+
+  @ApiProperty()
   slug : string
 
   @ApiProperty()

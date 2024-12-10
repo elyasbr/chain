@@ -6,9 +6,9 @@ import {
   ApiOkObjectResponse, DeleteResponseDto,
   ResponseInterceptor,
 } from '@elyasbr/public/dist/src';
-import { CreateArchDto } from '../modules/arch/arch/create-arch.dto';
-import { UpdateArchDto } from '../modules/arch/arch/update-arch.dto';
-import { FilterArchDto } from '../modules/arch/arch/filter-arch.dto';
+import { CreateArchDto } from '../modules/arch/dtos/create-arch.dto';
+import { UpdateArchDto } from '../modules/arch/dtos/update-arch.dto';
+import { FilterArchDto } from '../modules/arch/dtos/filter-arch.dto';
 import { FilterCryptoDto } from '../modules/asset/dtos/crypto/filter-crypto.dto';
 import { ArchService } from '../modules/arch/arch.service';
 import { ApiValidationRequest } from '@elyasbr/public/dist/src/decorators/api-validation-request.decorator';

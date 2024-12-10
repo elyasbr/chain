@@ -31,7 +31,7 @@ export class ChainService {
     try {
       const  getOneStruct = await this.structRepository.findOne({_id : createChainDto.structId} ,[])
       if (!getOneStruct) {
-        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
       }
       const createChainMongoMapper = new CreateChainMongoMapper(createChainDto)
       const resultChain =  await this.chainRepository.create(createChainMongoMapper,[FieldsMongoEnum.UPDATED_AT])
@@ -45,12 +45,12 @@ export class ChainService {
     try {
       const  getOneStruct = await this.structRepository.findOne({_id : updateChainDto.structId})
       if (!getOneStruct) {
-        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
       }
       const updateChainMongoMapper = new UpdateChainMongoMapper(updateChainDto)
       const resultChain =  await this.chainRepository.findOneAndUpdate({_id : idStruct} , updateChainMongoMapper,[FieldsMongoEnum.UPDATED_AT])
       if (!resultChain) {
-        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_ERROR, JSON.stringify(ChainError.CHAIN_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(ChainError.CHAIN_NOT_FOUND))
       }
       return await this.chainRepository.changeField(resultChain , [{key : "_id" , value : this.chainId}])
 
@@ -65,7 +65,7 @@ export class ChainService {
     try {
       const resultChain =  await this.chainRepository.findOne({_id : chainId} ,[FieldsMongoEnum.UPDATED_AT])
       if (!resultChain) {
-        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_ERROR, JSON.stringify(ChainError.CHAIN_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(ChainError.CHAIN_NOT_FOUND))
       }
       return await this.chainRepository.changeField(resultChain , [{key : "_id" , value : this.chainId}])
     } catch (e) {
@@ -76,7 +76,7 @@ export class ChainService {
     try {
       const resultArch = await this.archRepository.findOne({chainId : chainId})
       if (resultArch) {
-        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_ERROR, JSON.stringify(ChainError.CHAIN_HAVE_ARCH))
+        throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(ChainError.CHAIN_HAVE_ARCH))
 
       }
       const deleteResult =  await this.chainRepository.deleteOne({ _id :chainId })

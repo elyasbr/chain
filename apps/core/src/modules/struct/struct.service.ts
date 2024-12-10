@@ -43,7 +43,7 @@ export class StructService {
       const updateStructMongoMapper = new UpdateStructMongoMapper(updateStructDto)
       const resultStruct =  await this.structRepository.findOneAndUpdate({_id : idStruct} , updateStructMongoMapper , ['updated_at'])
       if (!resultStruct) {
-        throw new Err1000(SectionsErrorsEnum.STRUCT, ErrorType.VALIDATION_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.STRUCT, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
       }
       return this.structRepository.changeField(resultStruct, [{ key: "_id", value: this.structId }])
     } catch (e) {
@@ -58,7 +58,7 @@ export class StructService {
 
       const resultStruct =  await this.structRepository.findOne({_id : structId} ,[FieldsMongoEnum.UPDATED_AT] )
       if (resultStruct==null) {
-        throw new Err1000(SectionsErrorsEnum.STRUCT, ErrorType.VALIDATION_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.STRUCT, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
       }
       return await this.structRepository.changeField(resultStruct, [{ key: "_id", value: this.structId }])
 
@@ -72,11 +72,11 @@ export class StructService {
     try {
       const resultChain = await this.chainRepository.findOne({ structId : structId})
       if (resultChain) {
-        throw new Err1000(SectionsErrorsEnum.STRUCT, ErrorType.VALIDATION_ERROR, JSON.stringify(StructError.STRUCT_HAVE_CHAIN))
+        throw new Err1000(SectionsErrorsEnum.STRUCT, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(StructError.STRUCT_HAVE_CHAIN))
       }
       const deleteResult =  await this.structRepository.deleteOne({ _id :structId })
       if (deleteResult.deletedCount==0) {
-        throw new Err1000(SectionsErrorsEnum.STRUCT, ErrorType.VALIDATION_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.STRUCT, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
       }
       return  {
         status : true

@@ -37,7 +37,7 @@ export class BankService {
       const updateBankMongoMapper = new UpdateBankMongoMapper(updateBankDto)
       const resultBank =  await this.bankRepository.findOneAndUpdate({_id : bankId} , updateBankMongoMapper,[FieldsMongoEnum.UPDATED_AT])
       if (!resultBank) {
-        throw new Err1000(SectionsErrorsEnum.BANK, ErrorType.VALIDATION_ERROR, JSON.stringify(BankError.BANK_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.BANK, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(BankError.BANK_NOT_FOUND))
       }
       return  this.bankRepository.changeField(resultBank ,[{key : "_id" , value : this.bankId}])
 
@@ -50,7 +50,7 @@ export class BankService {
     try {
       const resultBank =  await this.bankRepository.findOne({_id : bankId} , [FieldsMongoEnum.UPDATED_AT] )
       if (!resultBank) {
-        throw new Err1000(SectionsErrorsEnum.BANK, ErrorType.VALIDATION_ERROR, JSON.stringify(BankError.BANK_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.BANK, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(BankError.BANK_NOT_FOUND))
       }
       return  this.bankRepository.changeField(resultBank ,[{key : "_id" , value : this.bankId}])
     } catch (e) {
@@ -61,7 +61,7 @@ export class BankService {
     try {
       const deleteResult =  await this.bankRepository.deleteOne({ _id : bankId })
       if (deleteResult.deletedCount==0) {
-        throw new Err1000(SectionsErrorsEnum.BANK, ErrorType.VALIDATION_ERROR, JSON.stringify(BankError.BANK_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.BANK, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(BankError.BANK_NOT_FOUND))
       }
       return  {
         status : true

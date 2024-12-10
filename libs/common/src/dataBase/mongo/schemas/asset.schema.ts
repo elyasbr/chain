@@ -79,6 +79,11 @@ export class Asset extends AbstractDocument {
   logo? : string
 
   @Prop({
+    default : true
+  })
+  isSystem :Boolean
+
+  @Prop({
     enum : StatusAssetEnum ,
     default: StatusAssetEnum.ACTIVE
   })

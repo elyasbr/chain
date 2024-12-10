@@ -25,12 +25,12 @@ export class CryptoService {
     try {
       const getOneArch = await this.archRepository.findOne({_id : createCryptoDto.archId},[])
       if (!getOneArch) {
-        throw new Err1000(SectionsErrorsEnum.ARCH, ErrorType.VALIDATION_ERROR, JSON.stringify(ArchError.ARCH_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.ARCH, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(ArchError.ARCH_NOT_FOUND))
       }
       const getOneAsset = await this.assetRepository.findOne({_id : createCryptoDto.assetId} ,[])
       console.log(getOneAsset);
       if (!getOneAsset) {
-        throw new Err1000(SectionsErrorsEnum.ASSET, ErrorType.VALIDATION_ERROR, JSON.stringify(AssetError.ASSET_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.ASSET, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(AssetError.ASSET_NOT_FOUND))
       }
       const createCryptoMongoMapper = new CreateCryptoMongoMapper(createCryptoDto)
       const createCrypto = await this.cryptoRepository.create(createCryptoMongoMapper , [FieldsMongoEnum.UPDATED_AT])
@@ -45,16 +45,16 @@ export class CryptoService {
     try {
       const findOneArch = await this.archRepository.findOne({_id : updateCryptoDto.archId})
       if (!findOneArch) {
-        throw new Err1000(SectionsErrorsEnum.ARCH, ErrorType.VALIDATION_ERROR, JSON.stringify(ArchError.ARCH_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.ARCH, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(ArchError.ARCH_NOT_FOUND))
       }
       const findOneAsset = await this.assetRepository.findOne({_id : updateCryptoDto.assetId})
       if (!findOneAsset) {
-        throw new Err1000(SectionsErrorsEnum.ASSET, ErrorType.VALIDATION_ERROR, JSON.stringify(AssetError.ASSET_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.ASSET, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(AssetError.ASSET_NOT_FOUND))
       }
       const updateCryptoMongoMapper = new UpdateCryptoMongoMapper(updateCryptoDto)
       const resultCrypto =  await this.cryptoRepository.findOneAndUpdate({_id : cryptoId} , updateCryptoMongoMapper ,[FieldsMongoEnum.UPDATED_AT])
       if (!resultCrypto) {
-        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_ERROR, JSON.stringify(CryptoError.CRYPTO_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CryptoError.CRYPTO_NOT_FOUND))
       }
       const paginateCryptoRMapper = new PaginateCryptoRMapper(findOneAsset , resultCrypto)
       return paginateCryptoRMapper
@@ -67,7 +67,7 @@ export class CryptoService {
     try {
       const resultCrypto =  await this.cryptoRepository.findOne({_id : cryptoId} ,[FieldsMongoEnum.UPDATED_AT])
       if (!resultCrypto) {
-        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_ERROR, JSON.stringify(CryptoError.CRYPTO_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CryptoError.CRYPTO_NOT_FOUND))
       }
       const findOneAsset = await this.assetRepository.findOne({_id : resultCrypto.assetId})
       const paginateCryptoRMapper = new PaginateCryptoRMapper(findOneAsset , resultCrypto)
@@ -80,7 +80,7 @@ export class CryptoService {
     try {
       const deleteResult =  await this.cryptoRepository.deleteOne({ _id : cryptoId })
       if (deleteResult.deletedCount==0) {
-        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_ERROR, JSON.stringify(CryptoError.CRYPTO_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CryptoError.CRYPTO_NOT_FOUND))
       }
       return {
         status : true

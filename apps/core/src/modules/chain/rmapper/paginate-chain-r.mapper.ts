@@ -14,6 +14,9 @@ export class PaginateChainRMapper  {
   structId : string
 
   @ApiProperty()
+  scannerAddress : string
+
+  @ApiProperty()
   slug : string
 
   @ApiProperty()

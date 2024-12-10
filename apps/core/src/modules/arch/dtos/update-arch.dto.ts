@@ -1,13 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Allow, IsBoolean, IsMongoId, IsNumber, IsString } from 'class-validator';
-import { ArchError, ChainError, StructError } from '@elyasbr/tools-chain/dist/src';
+import { ArchError, ChainError } from '@elyasbr/tools-chain/dist/src';
 
-export class CreateArchDto {
+export class UpdateArchDto {
   @ApiProperty()
   @IsMongoId({
     message : JSON.stringify(ChainError.PATTERN_CHAIN_ID_IS_WRONG)
   })
-  @Allow()
   chainId : string
 
   @ApiPropertyOptional({
@@ -21,7 +20,6 @@ export class CreateArchDto {
   @IsString({
     message : JSON.stringify(ArchError.SLUG_FIELD_ARCH_IS_REQUIRED)
   })
-  @Allow()
   slug : string
 
   @ApiProperty()
@@ -32,13 +30,11 @@ export class CreateArchDto {
   @IsString({
     message : JSON.stringify(ArchError.SYMBOL_FIELD_ARCH_IS_REQUIRED)
   })
-  @Allow()
   symbol : string
 
   @ApiProperty()
   @IsBoolean({
     message : JSON.stringify(ArchError.STATUS_FIELD_ARCH_IS_REQUIRED)
   })
-  @Allow()
   status :Boolean
 }

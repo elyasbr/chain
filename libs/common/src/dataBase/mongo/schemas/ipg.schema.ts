@@ -2,8 +2,8 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 
 import { AbstractDocument, FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
 import { TypeIpgEnum } from '@app/common/enums/type-ipg.enum';
-import {  Types } from 'mongoose';
 import { MethodsEnum } from '@elyasbr/public/dist/src';
+
 
 @Schema()
 class LinkBackend {
@@ -44,13 +44,11 @@ class CallBackBackend {
   method : MethodsEnum
 }
 
-
-
 @Schema({ versionKey: false ,
   timestamps : {
     createdAt: FieldsMongoEnum.CREATED_AT,
     updatedAt: FieldsMongoEnum.UPDATED_AT
-  } ,  collection : "ipg"})
+  } , collection : "ipg"})
 export class Ipg extends AbstractDocument {
 
   @Prop({
@@ -58,6 +56,7 @@ export class Ipg extends AbstractDocument {
     type : String ,
     index : true ,
     unique : true
+
   })
   slug : string
 

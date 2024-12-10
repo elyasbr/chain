@@ -7,14 +7,14 @@ import { DeleteResponseDto, JsonMethodUtl } from '@elyasbr/public/dist/src';
 import { FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
 import { SectionsErrorsEnum } from '@elyasbr/throw/dist/src/enums/sections-errors.enum';
 import { Err1000, ErrorType } from '@elyasbr/throw/dist/src/err';
-import { CreateSpeedWithdrawDto } from './dtos/create-speed-withdraw.dto';
-import { CreateSpeedWithdrawMongoMapper } from './mapper/create-speed-withdraw-mongo.mapper';
+import { CreateSpeedWithdrawDto } from './dtos/speed-withdraw/create-speed-withdraw.dto';
+import { CreateSpeedWithdrawMongoMapper } from './mapper/speed-withdraw/create-speed-withdraw-mongo.mapper';
 import { SpeedWithdrawRepository } from '@app/common/dataBase/mongo/repositories/speed-withdraw.repository';
-import { UpdateSpeedWithdrawDto } from './dtos/update-speed-withdraw.dto';
-import { UpdateSpeedWithdrawMongoMapper } from './mapper/update-speed-withdraw-mongo.mapper';
-import { FilterSpeedWithdrawDto } from './dtos/filter-speed-withdraw.dto';
-import { PaginateSpeedWithdrawRMapper } from './rmapper/paginate-speed-withdraw-r.mapper';
-import { GetSpeedWithdrawRMapper } from './rmapper/get-speed-withdraw-r.mapper';
+import { UpdateSpeedWithdrawDto } from './dtos/speed-withdraw/update-speed-withdraw.dto';
+import { UpdateSpeedWithdrawMongoMapper } from './mapper/speed-withdraw/update-speed-withdraw-mongo.mapper';
+import { FilterSpeedWithdrawDto } from './dtos/speed-withdraw/filter-speed-withdraw.dto';
+import { PaginateSpeedWithdrawRMapper } from './rmapper/speed-withdraw/paginate-speed-withdraw-r.mapper';
+import { GetSpeedWithdrawRMapper } from './rmapper/speed-withdraw/get-speed-withdraw-r.mapper';
 
 @Injectable()
 export class SpeedWithdrawService {
@@ -37,7 +37,7 @@ export class SpeedWithdrawService {
       const updateIpgMongoMapper = new UpdateSpeedWithdrawMongoMapper(updateSpeedWithdrawDto)
       const resultIpg =  await this.speedWithdrawRepository.findOneAndUpdate({_id : speedWithdrawId} , updateIpgMongoMapper ,[FieldsMongoEnum.UPDATED_AT])
       if (!resultIpg) {
-        throw new Err1000(SectionsErrorsEnum.SPEED_WITHDRAW, ErrorType.VALIDATION_ERROR, JSON.stringify(SpeedWithdrawError.SPEED_WITHDRAW_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.SPEED_WITHDRAW, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(SpeedWithdrawError.SPEED_WITHDRAW_NOT_FOUND))
       }
       return JsonMethodUtl.changeField(resultIpg, [{ key: "_id", value: this.speedWithdrawId }])
 
@@ -51,7 +51,7 @@ export class SpeedWithdrawService {
     try {
       const resultIpg =  await this.speedWithdrawRepository.findOne({_id : speedWithdrawId} ,[FieldsMongoEnum.UPDATED_AT])
       if (!resultIpg) {
-        throw new Err1000(SectionsErrorsEnum.IPG, ErrorType.VALIDATION_ERROR, JSON.stringify(SpeedWithdrawError.SPEED_WITHDRAW_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.IPG, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(SpeedWithdrawError.SPEED_WITHDRAW_NOT_FOUND))
       }
       return JsonMethodUtl.changeField(resultIpg, [{ key: "_id", value: this.speedWithdrawId }])
     } catch (e) {
@@ -64,7 +64,7 @@ export class SpeedWithdrawService {
     try {
       const deleteResult =  await this.speedWithdrawRepository.deleteOne({ _id :speedWithdrawId })
       if (deleteResult.deletedCount==0) {
-        throw new Err1000(SectionsErrorsEnum.IPG, ErrorType.VALIDATION_ERROR, JSON.stringify(SpeedWithdrawError.SPEED_WITHDRAW_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.IPG, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(SpeedWithdrawError.SPEED_WITHDRAW_NOT_FOUND))
       }
       return {
         status : true

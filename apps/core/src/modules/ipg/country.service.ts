@@ -70,7 +70,7 @@ export class CountryService {
       const updateCountryMongoMapper = new UpdateCountryMongoMapper(updateCountryDto)
       const resultCountry =  await this.countryRepository.findOneAndUpdate({_id : countryId} , updateCountryMongoMapper , [FieldsMongoEnum.UPDATED_AT])
       if (!resultCountry) {
-        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
       }
       return  this.countryRepository.changeField(resultCountry , [{key :"_id" , value : this.countryId}])
 
@@ -85,7 +85,7 @@ export class CountryService {
     try {
       const resultCountry =  await this.countryRepository.findOne({_id : ipgId} ,[FieldsMongoEnum.UPDATED_AT] )
       if (!resultCountry) {
-        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
       }
       return  this.countryRepository.changeField(resultCountry , [{key :"_id" , value : this.countryId}])
 
@@ -99,7 +99,7 @@ export class CountryService {
     try {
       const deleteResult =  await this.countryRepository.deleteOne({ _id : countryId  })
       if (deleteResult.deletedCount==0) {
-        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CountryError.COUNTRY_NOT_FOUND))
       }
       return {
         status : true
@@ -157,11 +157,11 @@ export class CountryService {
     try {
       const  resultCountry = await this.countryRepository.findOne({_id : createCountryBankDto.countryId} ,[])
       if (!resultCountry) {
-        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_NOT_FOUND) )
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CountryError.COUNTRY_NOT_FOUND) )
       }
       const  resultBank = await this.bankRepository.findOne({_id : createCountryBankDto.bankId},[])
       if (!resultBank) {
-        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(BankError.BANK_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(BankError.BANK_NOT_FOUND))
       }
       const createCountryBankMongoMapper = new CreateCountryBankMongoMapper(createCountryBankDto)
       const resultCountryLBank = await this.countryRlBankRepository.create(createCountryBankMongoMapper,
@@ -177,7 +177,7 @@ export class CountryService {
     try {
       const deleteResult =  await this.countryRlBankRepository.deleteOne({ _id : countryBankId  })
       if (deleteResult.deletedCount==0) {
-        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_NOT_FOUND))
       }
       return {
         status : true
@@ -191,11 +191,11 @@ export class CountryService {
     try {
       const  resultCountryBank = await this.countryRlBankRepository.findOne({_id : createCountryBankRlCryptoDto.countryBankId},[])
       if (!resultCountryBank) {
-        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_NOT_FOUND))
       }
       const  resultCrypto = await this.cryptoRepository.findOne({_id : createCountryBankRlCryptoDto.cryptoId},[])
       if (!resultCrypto) {
-        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_ERROR, JSON.stringify(CryptoError.CRYPTO_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CryptoError.CRYPTO_NOT_FOUND))
       }
       const createCountryBankCryptoMongoMapper = new CreateCountryBankCryptoMongoMapper(createCountryBankRlCryptoDto)
       const  resultCountryBankRlCrypto = await this.countryBankRlCryptoRepository.create(createCountryBankCryptoMongoMapper,[FieldsMongoEnum.UPDATED_AT])
@@ -212,7 +212,7 @@ export class CountryService {
     try {
       const deleteResult =  await this.countryBankRlCryptoRepository.deleteOne({ _id : countryBankCryptoId  })
       if (deleteResult.deletedCount==0) {
-        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_CRYPTO_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_CRYPTO_NOT_FOUND))
       }
       return {
         status : true
@@ -255,11 +255,11 @@ export class CountryService {
     try {
       const  resultCountry = await this.countryBankRlCryptoRepository.findOne({_id : createCountryBankCryptoRlIpgDto.countryBankCryptoId},[])
       if (!resultCountry) {
-        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_CRYPTO_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.CRYPTO, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_CRYPTO_NOT_FOUND))
       }
       const  resultIpg = await this.ipgRepository.findOne({_id : createCountryBankCryptoRlIpgDto.ipgId} ,[])
       if (!resultIpg) {
-        throw new Err1000(SectionsErrorsEnum.IPG, ErrorType.VALIDATION_ERROR, JSON.stringify(IpgError.IPG_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.IPG, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(IpgError.IPG_NOT_FOUND))
       }
       const createCountryBankCryptoIpgMongoMapper = new CreateCountryBankCryptoIpgMongoMapper(createCountryBankCryptoRlIpgDto)
       const createCountryBankCryptoRlIpg = await this.countryBankCryptoRlIpgRepository.create(createCountryBankCryptoIpgMongoMapper,[FieldsMongoEnum.UPDATED_AT])
@@ -274,7 +274,7 @@ export class CountryService {
     try {
       const deleteResult =  await this.countryBankCryptoRlIpgRepository.deleteOne({ _id : countryBankCryptoIpg  })
       if (deleteResult.deletedCount==0) {
-        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_CRYPTO_IPG_NOT_FOUND))
+        throw new Err1000(SectionsErrorsEnum.COUNTRY, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(CountryError.COUNTRY_BANK_CRYPTO_IPG_NOT_FOUND))
       }
       return {
         status : true

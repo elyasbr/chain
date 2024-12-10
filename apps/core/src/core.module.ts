@@ -23,7 +23,10 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from '@elyasbr/public/dist/src';
 import * as process from 'process';
 import { RewardDepositController } from './controller/reward-deposit.controller';
-import { SpeedWithdrawModule } from './modules/speed-withdraw/speed-withdraw.module';
+import { WithdrawModule } from './modules/withdraw/withdraw.module';
+import { SpeedWithdrawController } from './controller/speed-withdraw.controller';
+import { WithdrawCryptoController } from './controller/withdraw-crypto.controller';
+import { FeeWithdrawController } from './controller/fee-withdraw.controller';
 
 @Module({
   imports: [
@@ -42,12 +45,12 @@ import { SpeedWithdrawModule } from './modules/speed-withdraw/speed-withdraw.mod
     ChainModule ,
     ArchModule ,
     AssetModule ,
-    SpeedWithdrawModule
+    WithdrawModule
   ],
   controllers: [
     IpgController , StructController , ChainController , ArchController , AssetController ,
     BankController , CountryController , CryptoController ,
-    RewardDepositController
+    RewardDepositController , SpeedWithdrawController , WithdrawCryptoController , FeeWithdrawController
   ],
   providers: [
     {

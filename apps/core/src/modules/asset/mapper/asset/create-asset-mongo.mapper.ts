@@ -6,7 +6,7 @@ import { Struct } from '@app/common/dataBase/mongo/schemas/struct.schema';
 import { Chain } from '@app/common/dataBase/mongo/schemas/chain.schema';
 import { CreateChainDto } from '../../../chain/dtos/create-chain.dto';
 import { Arch } from '@app/common/dataBase/mongo/schemas/arch.schema';
-import { CreateArchDto } from '../../../arch/arch/create-arch.dto';
+import { CreateArchDto } from '../../../arch/dtos/create-arch.dto';
 import { Asset } from '@app/common/dataBase/mongo/schemas/asset.schema';
 import { CreateAssetDto } from '../../dtos/asset/create-asset.dto';
 import { ApiProperty } from '@nestjs/swagger';

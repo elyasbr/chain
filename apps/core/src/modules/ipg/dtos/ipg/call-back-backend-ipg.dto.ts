@@ -22,7 +22,6 @@ export class CallBackBackendIpgDto {
     required : true
   })
   @IsArray({
-
     message: JSON.stringify(IpgError.BODY_LINK_BACKEND_IPG_IS_REQUIRED),
   })
   body:string[]

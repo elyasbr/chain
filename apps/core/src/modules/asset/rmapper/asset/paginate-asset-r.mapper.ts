@@ -14,6 +14,9 @@ export class PaginateAssetRMapper {
   symbol : string
 
   @ApiProperty()
+  isSystem : boolean
+
+  @ApiProperty()
   logo : string
 
   @ApiProperty()

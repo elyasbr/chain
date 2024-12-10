@@ -19,15 +19,15 @@ import { UpdateStructMongoMapper } from '../modules/struct/mapper/update-struct-
 import { GetStructRMapper } from '../modules/struct/rmapper/get-struct-r.mapper';
 import { PaginateStructRMapper } from '../modules/struct/rmapper/paginate-struct-r.mapper';
 import { FilterChainsOfStructDto } from '../modules/struct/dtos/filter-chains-of-struct.dto';
-import { SpeedWithdrawService } from '../modules/speed-withdraw/speed-withdraw.service';
-import { PaginateSpeedWithdrawRMapper } from '../modules/speed-withdraw/rmapper/paginate-speed-withdraw-r.mapper';
-import { CreateSpeedWithdrawDto } from '../modules/speed-withdraw/dtos/create-speed-withdraw.dto';
-import { UpdateSpeedWithdrawDto } from '../modules/speed-withdraw/dtos/update-speed-withdraw.dto';
-import { GetSpeedWithdrawRMapper } from '../modules/speed-withdraw/rmapper/get-speed-withdraw-r.mapper';
-import { FilterSpeedWithdrawDto } from '../modules/speed-withdraw/dtos/filter-speed-withdraw.dto';
+import { SpeedWithdrawService } from '../modules/withdraw/speed-withdraw.service';
+import { PaginateSpeedWithdrawRMapper } from '../modules/withdraw/rmapper/speed-withdraw/paginate-speed-withdraw-r.mapper';
+import { CreateSpeedWithdrawDto } from '../modules/withdraw/dtos/speed-withdraw/create-speed-withdraw.dto';
+import { UpdateSpeedWithdrawDto } from '../modules/withdraw/dtos/speed-withdraw/update-speed-withdraw.dto';
+import { GetSpeedWithdrawRMapper } from '../modules/withdraw/rmapper/speed-withdraw/get-speed-withdraw-r.mapper';
+import { FilterSpeedWithdrawDto } from '../modules/withdraw/dtos/speed-withdraw/filter-speed-withdraw.dto';
 
 @Controller({
-  path : "blockchain/withdraw" ,
+  path : "blockchain/speed-withdraw" ,
   version : "1"
 })
 @ApiTags("Speed Withdraw")
@@ -40,6 +40,7 @@ export class SpeedWithdrawController {
   @ApiOperation({ summary: 'Create SpeedWithdraw'  })
   @ApiCreatedObjectResponse(  PaginateSpeedWithdrawRMapper)
   createStruct(@Body() createSpeedWithdrawDto : CreateSpeedWithdrawDto) {
+    console.log(createSpeedWithdrawDto);
     return this.speedWithdrawService.createSpeedWithdraw(createSpeedWithdrawDto)
   }
   @Put("/:speedWithdrawId")

@@ -15,6 +15,10 @@ export class GetAssetRMapper {
   symbol : string
 
   @ApiProperty()
+  isSystem : boolean
+
+
+  @ApiProperty()
   logo : string
 
   @ApiProperty()

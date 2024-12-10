@@ -1,5 +1,6 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractDocument, FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/src';
+import { UserWalletSchema } from '@app/common/dataBase/mongo/schemas/user-wallet.schema';
 
 
 
@@ -11,15 +12,16 @@ import { AbstractDocument, FieldsMongoEnum } from '@elyasbr/dynamic-mongo/dist/s
 export class WithdrawCrypto extends AbstractDocument {
 
   @Prop()
-  cryptoId : string
+  speedWithdrawId : string
 
   @Prop()
-  speedWithdrawId : string
+  cryptoId : string
 
   @Prop({
     default : 0
   })
   rateWithdraw : number
+
 
   @Prop({
     type : Boolean ,
@@ -30,3 +32,4 @@ export class WithdrawCrypto extends AbstractDocument {
 }
 
 export const WithdrawCryptoSchema = SchemaFactory.createForClass( WithdrawCrypto );
+WithdrawCryptoSchema.index({ speedWithdrawId: 1, cryptoId: 1 }, { unique: true });

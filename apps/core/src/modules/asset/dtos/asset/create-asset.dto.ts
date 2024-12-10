@@ -35,6 +35,14 @@ export class CreateAssetDto {
 
   @ApiProperty()
   @Allow()
+  @IsBoolean({
+    message : JSON.stringify(AssetError.IS_SYSTEM_FIELD_ASSET_IS_REQUIRED)
+  })
+  isSystem : Boolean
+
+
+  @ApiProperty()
+  @Allow()
   @IsNumber({} ,{
     message : JSON.stringify(AssetError.RATE_TRADE_FIELD_ASSET_IS_REQUIRED)
   })

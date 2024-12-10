@@ -5,7 +5,6 @@ import {
   ApiCreatedObjectResponse,
   ApiOkObjectResponse,
   DeleteResponseDto,
-  ResponseInterceptor,
 } from '@elyasbr/public/dist/src';
 import { BankService } from '../modules/ipg/bank.service';
 import { CreateBankDto } from '../modules/ipg/dtos/bank/create-bank.dto';

@@ -7,15 +7,6 @@ import {
   DeleteResponseDto,
   ResponseInterceptor,
 } from '@elyasbr/public/dist/src';
-
-import { IpgService } from '../modules/ipg/ipg.service';
-import { CreateIpgDto } from '../modules/ipg/dtos/ipg/create-ipg.dto';
-import { UpdateIpgDto } from '../modules/ipg/dtos/ipg/update-ipg.dto';
-import { FilterIpgDto } from '../modules/ipg/dtos/ipg/filter-ipg.dto';
-import { BankService } from '../modules/ipg/bank.service';
-import { CreateBankDto } from '../modules/ipg/dtos/bank/create-bank.dto';
-import { UpdateBankDto } from '../modules/ipg/dtos/bank/update-bank.dto';
-import { FilterBankDto } from '../modules/ipg/dtos/bank/filter-bank.dto';
 import { CountryService } from '../modules/ipg/country.service';
 import { CreateCountryDto } from '../modules/ipg/dtos/country/create-country.dto';
 import { UpdateCountryDto } from '../modules/ipg/dtos/country/update-country.dto';
@@ -25,12 +16,9 @@ import { CreateCountryBankRlCryptoDto } from '../modules/ipg/dtos/country/create
 import { CreateCountryBankCryptoRlIpgDto } from '../modules/ipg/dtos/country/create-country-bank-crypto-rl-ipg.dto';
 import { ApiValidationRequest } from '@elyasbr/public/dist/src/decorators/api-validation-request.decorator';
 import { ApiForbiddenRequest } from '@elyasbr/public/dist/src/decorators/api-forbidden-request.decorator';
-import { CreateChainMongoMapper } from '../modules/chain/mapper/create-chain-mongo.mapper';
-import { CreateCountryMongoMapper } from '../modules/ipg/mapper/country/create-country-mongo.mapper';
-import { UpdateCountryMongoMapper } from '../modules/ipg/mapper/country/update-country-mongo.mapper';
 import { GetCountryRMapper } from '../modules/ipg/rmapper/country/get-country-r.mapper';
 import { PaginateCountryRMapper } from '../modules/ipg/rmapper/country/paginate-country-r.mapper';
-import { CreateCountryBankMongoMapper } from '../modules/ipg/mapper/country/create-country-bank-mongo.mapper';
+
 import { FilterCountryBankDto } from '../modules/ipg/dtos/country/filter-country-bank.dto';
 import { PaginateCountryBankRMapper } from '../modules/ipg/rmapper/country/paginate-country-bank-r.mapper';
 import { PaginateCountryBankRlCrypto } from '../modules/ipg/rmapper/country/paginate-country-bank-rl-crypto';

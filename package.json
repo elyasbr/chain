@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./apps/chain/test/jest-e2e.json"
   },
   "dependencies": {
-    "@elyasbr/dynamic-mongo": "^1.0.47",
+    "@elyasbr/dynamic-mongo": "^1.0.48",
     "@elyasbr/public": "^1.0.28",
     "@elyasbr/throw": "^1.0.52",
     "@elyasbr/tools-chain": "^1.0.81",

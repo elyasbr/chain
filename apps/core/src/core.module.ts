@@ -33,7 +33,7 @@ import { FeeWithdrawController } from './controller/fee-withdraw.controller';
 
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: './dist/.env',
+      envFilePath: 'dist/.env',
     }),
     // MongoModule.register({a : 2000}) ,
     MongooseModule.forRoot(`mongodb://root:kEfQqIL0v42B@${process.env.MONGO_REPLICA1},${process.env.MONGO_REPLICA2},` +

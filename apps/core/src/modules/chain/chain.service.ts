@@ -43,7 +43,7 @@ export class ChainService {
   }
   async updateChain(idStruct : string , updateChainDto : UpdateChainDto) {
     try {
-      const  getOneStruct = await this.structRepository.findOne({_id : updateChainDto.structId})
+      const  getOneStruct = await this.structRepository.findOne({_id : updateChainDto.structId},[])
       if (!getOneStruct) {
         throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(StructError.STRUCT_NOT_FOUND))
       }
@@ -57,17 +57,15 @@ export class ChainService {
     } catch (e) {
       this.throwService.handelError(e , SectionsErrorsEnum.CHAIN)
     }
-
-
   }
 
   async getChain(chainId : string ):Promise<GetChainRMapper> {
     try {
-      const resultChain =  await this.chainRepository.findOne({_id : chainId} ,[FieldsMongoEnum.UPDATED_AT])
-      if (!resultChain) {
+      const getOneChain =  await this.chainRepository.findOne({_id : chainId} ,[FieldsMongoEnum.UPDATED_AT])
+      if (!getOneChain) {
         throw new Err1000(SectionsErrorsEnum.CHAIN, ErrorType.VALIDATION_SYSTEM_ERROR, JSON.stringify(ChainError.CHAIN_NOT_FOUND))
       }
-      return await this.chainRepository.changeField(resultChain , [{key : "_id" , value : this.chainId}])
+      return await this.chainRepository.changeField(getOneChain , [{key : "_id" , value : this.chainId}])
     } catch (e) {
       this.throwService.handelError(e , SectionsErrorsEnum.CHAIN)
     }

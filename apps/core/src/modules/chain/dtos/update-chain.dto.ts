@@ -42,7 +42,6 @@ export class UpdateChainDto {
   @ApiProperty({
     default : true
   })
-  @Allow()
   @IsBoolean({
     message : JSON.stringify(ChainError.STATUS_FIELD_CHAIN_IS_REQUIRED)
   })
